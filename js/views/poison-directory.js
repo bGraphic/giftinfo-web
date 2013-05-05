@@ -1,6 +1,6 @@
 var PoisonDirectoryView = Parse.View.extend({
     tagName: "ul",
-    id: "seafood-collection",
+    id: "poison-collection",
     className: "nav nav-tabs nav-stacked",
 
     initialize: function () {
@@ -37,10 +37,10 @@ var PoisonDirectoryView = Parse.View.extend({
 var PoisonListItemView = Parse.View.extend({
     tagName: "li",
 
-    template: _.template($('#seafoodItemTemplate').html()),
+    template: _.template($('#poisonItemTemplate').html()),
 
     events: {
-        "click a.seafood" : "togglePoisonInfo"
+        "click a.poison" : "togglePoisonInfo"
     },
 
     render: function () {
@@ -52,8 +52,8 @@ var PoisonListItemView = Parse.View.extend({
 
         if(this.$el.children("article.info")) {
             this.$el.children("article.info").toggle();
-            this.$el.find(".seafood i.chevron").toggleClass("icon-chevron-down");
-            this.$el.find(".seafood i.chevron").toggleClass("icon-chevron-right");
+            this.$el.find(".poison i.chevron").toggleClass("icon-chevron-down");
+            this.$el.find(".poison i.chevron").toggleClass("icon-chevron-right");
         }
     }
 });
@@ -61,7 +61,7 @@ var PoisonListItemView = Parse.View.extend({
 var PoisonSearchDirectoryView = Parse.View.extend({
     el: "#filter",
 
-    template: _.template($('#seafoodSearchTemplate').html()),
+    template: _.template($('#poisonSearchTemplate').html()),
 
     events: {
         'keyup' : 'filterCollection'

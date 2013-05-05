@@ -2,7 +2,7 @@ var PoisonInfoView = Parse.View.extend({
     tagName: "article",
     className: "info",
 
-    template: _.template($('#seafoodInfoTemplate').html()),
+    template: _.template($('#poisonInfoTemplate').html()),
 
     render: function () {
 

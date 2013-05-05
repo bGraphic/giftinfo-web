@@ -62,7 +62,7 @@ header.page {
     padding-top: 10px;
 }
 
-ul#seafood-collection li .seafood {
+ul#poison-collection li .poison {
     font-size: 130%;
     font-weight: normal;
 
@@ -81,22 +81,7 @@ ul#seafood-collection li .seafood {
     background-size: 40px 56px;
 }
 
-ul#seafood-collection li .seafood.green {
-    background-image: url(../img/napp-icon_yes.png);
-}
-
-ul#seafood-collection li .seafood.red {
-    background-image: url(../img/napp-icon_no.png);
-}
-
-ul#seafood-collection li .seafood span {
-    opacity: 0.75;
-    font-size: 80%;
-
-    display: inline-block;
-}
-
-ul#seafood-collection li .seafood i.chevron {
+ul#poison-collection li .poison i.chevron {
     position: absolute;
     top: 50%;
     right: 15px;
@@ -105,27 +90,27 @@ ul#seafood-collection li .seafood i.chevron {
     opacity: 0.25;
 }
 
-ul#seafood-collection .info {
+ul#poison-collection .info {
     border: 1px solid #ddd;
     padding: 20px 40px;
     display: none;
 }
 
-ul#seafood-collection .info i {
+ul#poison-collection .info i {
     vertical-align: super;
     opacity: 0.8;
     margin-left: -5px;
 }
 
-ul#seafood-collection .info a.more-info:hover i {
+ul#poison-collection .info a.more-info:hover i {
     opacity: 0.75;
 }
 
-ul#seafood-collection .info .badges img {
+ul#poison-collection .info .badges img {
     height: 70px;
 }
 
-#seafood-spinner {
+#poison-spinner {
     display: block;
     margin: auto;
 
@@ -141,24 +126,9 @@ ul#seafood-collection .info .badges img {
 (min-resolution: 1.5dppx) {
 
     #header {
-        background-image: url(../img/napp-icon@2x_header.png);
+        background-image: url(../img/giftinfo-icon@2x_header.png);
     }
-
-    ul#seafood-collection li .seafood {
-        background-image: url(../img/napp-icon@2x_maybe.png);
-    }
-
-    ul#seafood-collection li .seafood.green {
-        background-image: url(../img/napp-icon@2x_yes.png);
-    }
-
-    ul#seafood-collection li .seafood.red {
-        background-image: url(../img/napp-icon@2x_no.png);
-    }
-
 }
-
-
 
 @media (max-width: 979px) and (min-width: 768px) {
     .navbar .container {
@@ -222,12 +192,12 @@ ul#seafood-collection .info .badges img {
         border-bottom-left-radius: 0;
     }
 
-    #seafood-collection .info {
+    #poison-collection .info {
         padding-left: 20px;
         padding-right: 20px;
     }
 
-    ul#seafood-collection li .seafood span {
+    ul#poison-collection li .poison span {
         clear: both;
         display: block;
     }

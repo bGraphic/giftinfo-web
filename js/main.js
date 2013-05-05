@@ -9,15 +9,15 @@ var AppRouter = Parse.Router.extend({
 
         this.poisonCollection = new PoisonCollection();
 
-        $("#app").html('<img id="seafood-spinner" src="img/spinner.gif">');
+        $("#app").html('<img id="poison-spinner" src="img/spinner.gif">');
         $("#app").prepend(new PoisonDirectoryView({model: this.poisonCollection}).el);
         $("#filter").append(new PoisonSearchDirectoryView({model: this.poisonCollection, app: this}).el);
 
         this.batchRetrieve(0);
 
         $("article.info").hide();
-        $(".seafood i.chevron").removeClass("icon-chevron-down");
-        $(".seafood i.chevron").addClass("icon-chevron-right");
+        $(".poison i.chevron").removeClass("icon-chevron-down");
+        $(".poison i.chevron").addClass("icon-chevron-right");
     },
 
     poison: function(poisonSlug) {
@@ -49,14 +49,14 @@ var AppRouter = Parse.Router.extend({
             model: poison
         });
 
-        $el = $(".seafood."+this.selectedSlug).parent();
+        $el = $(".poison."+this.selectedSlug).parent();
 
         if($el.children("article.info").length == 0)
             $el.append(poisonInfoView.render().el);
 
         $el.children("article.info").show();
-        $el.find(".seafood i.chevron").addClass("icon-chevron-down");
-        $el.find(".seafood i.chevron").removeClass("icon-chevron-right");
+        $el.find(".poison i.chevron").addClass("icon-chevron-down");
+        $el.find(".poison i.chevron").removeClass("icon-chevron-right");
 
 
         if(scroll) {
@@ -87,7 +87,7 @@ var AppRouter = Parse.Router.extend({
                     self.batchRetrieve(startIndex+limit);
                 else {
                     self.openSelectedPoison(true);
-                    $("#seafood-spinner").remove();
+                    $("#poison-spinner").remove();
                 }
             },
             error: function(error) {
