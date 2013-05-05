@@ -25,15 +25,15 @@ header.page {
 }
 
 #header {
-    padding-top: 60px;
-    background-image: url(../img/napp-icon_header.png);
+    padding-top: 70px;
+    padding-bottom: 40px;
+    background-image: url(../img/icon-header.png);
     background-position: left bottom;
     background-repeat: no-repeat;
     margin-left: -30px;
     padding-left: 220px;
-    padding-bottom: 15px;
     margin-bottom: 23px;
-    background-size: 206px 145px;
+    background-size: 206px 206px;
 }
 
 #header h1 {
@@ -126,7 +126,7 @@ ul#poison-collection .info .badges img {
 (min-resolution: 1.5dppx) {
 
     #header {
-        background-image: url(../img/giftinfo-icon@2x_header.png);
+        background-image: url(../img/icon-header@2x.png);
     }
 }
 
