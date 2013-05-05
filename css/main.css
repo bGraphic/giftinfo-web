@@ -24,6 +24,12 @@ header.page {
     margin-bottom: 15px;
 }
 
+header.page small {
+    margin-top: -30px;
+    text-align: right;
+    display: block;
+}
+
 #header {
     padding-top: 70px;
     padding-bottom: 40px;
@@ -142,8 +148,12 @@ ul#poison-collection .info .badges img {
         text-align: center;
     }
 
+    header.page small {
+        text-align: center;
+    }
+
     #header {
-        padding-top: 160px;
+        padding-top: 200px;
         margin-left: 0;
         padding-left: 0;
         background-position: top center;
