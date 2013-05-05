@@ -63,7 +63,7 @@
 <!-- Template -->
 
 <script id="seafoodItemTemplate" type="text/template">
-    <a class="seafood <%= slug %>" href="#<%= slug %>"><%= title %>
+    <a class="seafood <%= objectId %>" href="#<%= objectId %>"><%= title %>
 
         <i class="chevron icon-chevron-right" />
     </a>
@@ -79,84 +79,8 @@
 
 <script id="seafoodInfoTemplate" type="text/template">
     <header>
-        <h2><%= name %></h2>
+        <h2><%= title %></h2>
     </header>
-
-    <blockquote>
-        <%= quote %>
-        <% if (quote_thanks) { %>
-        <small><%= quote_thanks %></small>
-        <% } %>
-    </blockquote>
-
-    <p>
-        <%= comment %>
-    </p>
-</script>
-
-<script id="seafoodEnvStatusInfoTemplate"  type="text/template">
-    <p>
-        <%= name %> er et
-        <strong>
-        <% if (env_status == "smil") { %>
-            godt klimavalg.
-        <% } else if (env_status == "ok") { %>
-            ok klimavalg.
-        <% } else if (env_status == "sur") { %>
-            dårlig klimvalg.
-        <% } %>
-        </strong>
-        <br/>
-        <small>
-        - Basert på Grønn Hverdags opplysninger om utslipp av klimagasser.
-        </small>
-    </p>
-</script>
-
-<script id="seafoodEnvStatusNoneInfoTemplate" type="text/template">
-    <p>
-        <%= name %> mangler klimainformasjon.
-        </a>
-    </p>
-</script>
-
-<script id="seafoodBadgesInfoTemplate" type="text/template">
-        <% if (krav && msc) { %>
-        <p>Se etter disse merkene: </p>
-        <% } else if (krav || msc) { %>
-        <p>Se etter dette merket: </p>
-        <% } %>
-
-        <p>
-            <% if (krav) { %>
-            <img src="http://napp.marinbiologene.no/images/krav.jpg" />
-            <% } %>
-
-            <% if (msc) { %>
-            <img src="http://napp.marinbiologene.no/images/msc.jpg" />
-            <% } %>
-        </p>
-
-</script>
-
-<script id="seafoodPictureInfoTemplate" type="text/template">
-        <p>
-            <img src="http://napp.marinbiologene.no/images/art/<%= img_src %>" class="img-polaroid"/>
-        </p>
-
-        <p>
-            <small>
-                <% if (photographer && copyright) { %>
-                <%= photographer %> | <%= copyright %>
-                <% } else if (photographer) { %>
-                <%= photographer %>
-                <% } else if (copyright) { %>
-                <%= copyright %>
-                <% } %>
-            </small>
-        <p>
-
-
 </script>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

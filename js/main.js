@@ -22,7 +22,9 @@ var AppRouter = Parse.Router.extend({
 
     poison: function(poisonSlug) {
 
-        this.slectedSlug = poisonSlug;
+        console.log("Poison slug: "+ poisonSlug);
+
+        this.selectedSlug = poisonSlug;
 
         if(!this.poisonCollection) {
             this.home();
@@ -33,10 +35,15 @@ var AppRouter = Parse.Router.extend({
 
     openSelectedPoison: function(scroll) {
 
+        console.log("open poison, slected: " + this.selectedSlug);
+
         if(!this.selectedSlug)
             return;
 
+
         var poison = this.poisonCollection.getBySlug(this.selectedSlug);
+
+        console.log("posion " + poison);
 
         var poisonInfoView = new PoisonInfoView({
             model: poison
@@ -67,7 +74,7 @@ var AppRouter = Parse.Router.extend({
         var query = new Parse.Query(Poison);
         query.skip(startIndex);
         query.limit(limit);
-        query.ascending("name");
+        query.ascending("title");
 
         query.find({
             success: function(results) {

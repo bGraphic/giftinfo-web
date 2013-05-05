@@ -1,7 +1,5 @@
 var Poison = Parse.Object.extend("Poison", {
-    initialize: function() {
 
-    }
 });
 
 var PoisonCollection = Parse.Collection.extend({
@@ -17,7 +15,7 @@ var PoisonCollection = Parse.Collection.extend({
 
         this.each(function (poison) {
 
-                if(poison.get("key").trim() == key.trim()) {
+                if(poison.id.trim() == slug.trim()) {
                     myPoison = poison;
                 }
             }
