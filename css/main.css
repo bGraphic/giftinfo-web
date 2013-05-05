@@ -1,0 +1,202 @@
+body {
+    overflow-x: hidden;
+    padding-top: 30px;
+}
+
+a {
+    cursor: pointer;
+    color: inherit;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.75;
+}
+
+a:hover #header{
+    opacity: 0.9;
+}
+
+header {
+    font-size: 120%;
+    margin-bottom: 15px;
+}
+
+#header {
+    padding-top: 60px;
+    background-image: url(../img/napp-icon_header.png);
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    margin-left: -30px;
+    padding-left: 220px;
+    padding-bottom: 15px;
+    margin-bottom: 23px;
+    background-size: 206px 145px;
+}
+
+#header h1 {
+    font-size: 49.5px;
+}
+
+#header .lead {
+    margin-bottom: 0;
+    font-size: 27px;
+}
+
+.container {
+    max-width: 800px;
+}
+
+.navbar {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.navbar .navbar-inner {
+    min-height: 50px;
+    padding-top: 10px;
+}
+
+ul#seafood-collection li .seafood {
+    line-height: 250%;
+    font-size: 130%;
+    padding-left: 20px;
+    font-weight: normal;
+}
+
+ul#seafood-collection li .seafood span {
+    opacity: 0.75;
+    font-size: 80%;
+}
+
+ul#seafood-collection li .seafood i.chevron {
+    vertical-align: baseline;
+    opacity: 0.25;
+    margin-right: 10px;
+    margin-left: 10px;
+    float: right;
+    margin-top: 20px;
+}
+
+ul#seafood-collection li .seafood {
+    background-image: url(../img/napp-icon_maybe.png);
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    padding-left: 70px;
+    background-size: 40px 56px;
+}
+
+ul#seafood-collection li .seafood.green {
+    background-image: url(../img/napp-icon_yes.png);
+}
+
+ul#seafood-collection li .seafood.red {
+    background-image: url(../img/napp-icon_no.png);
+}
+
+#seafood-spinner {
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+ul#seafood-collection .info {
+    border: 1px solid #ddd;
+    padding: 20px 40px;
+    display: none;
+}
+
+ul#seafood-collection .info i {
+    vertical-align: super;
+    opacity: 0.8;
+    margin-left: -5px;
+}
+
+ul#seafood-collection .info a.more-info:hover i {
+    opacity: 0.75;
+}
+
+ul#seafood-collection .info .badges img {
+    height: 70px;
+}
+
+@media (min--moz-device-pixel-ratio: 1.5),
+(-o-min-device-pixel-ratio: 3/2),
+(-webkit-min-device-pixel-ratio: 1.5),
+(min-device-pixel-ratio: 1.5),
+(min-resolution: 144dpi),
+(min-resolution: 1.5dppx) {
+
+    #header {
+        background-image: url(../img/napp-icon@2x_header.png);
+    }
+
+    ul#seafood-collection li .seafood {
+        background-image: url(../img/napp-icon@2x_maybe.png);
+    }
+
+    ul#seafood-collection li .seafood.green {
+        background-image: url(../img/napp-icon@2x_yes.png);
+    }
+
+    ul#seafood-collection li .seafood.red {
+        background-image: url(../img/napp-icon@2x_no.png);
+    }
+
+}
+
+
+
+@media (max-width: 979px) and (min-width: 768px) {
+    .navbar .container {
+        width: 724px;
+    }
+}
+
+@media (max-width: 767px) {
+
+    header {
+        text-align: center;
+    }
+
+    #header {
+        padding-top: 160px;
+        margin-left: 0;
+        padding-left: 0;
+        background-position: top center;
+        border: none;
+    }
+
+    #header .lead {
+        font-size: 1em;
+    }
+
+    .navbar {
+        margin-left: -25px;
+        margin-right: -25px;
+        margin-bottom: -1px;
+    }
+
+    .navbar #filter {
+        float: none;
+        text-align: center;
+    }
+
+    .navbar #filter input {
+        width: 90%;
+        text-align: center;
+    }
+
+    #app {
+        margin-left: -22px;
+        margin-right: -22px;
+    }
+
+    #seafood-collection .info {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}

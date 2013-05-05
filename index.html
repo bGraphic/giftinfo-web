@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Grønt NAPP</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="apple-touch-icon" href="app-icons/ios/Icon.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="app-icons/os/Icon-72.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="app-icons/ios/Icon@2x.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="app-icons/ios/Icon-72@2x.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta property="og:image" content="http://grontnapp.no/app-icons/ios/iTunesArtwork.png"/>
+    <meta property="og:site_name" content="Marinbiologene"/>
+    <meta property="og:title" content="Grønt NAPP"/>
+    <meta property="og:url" content="http://grontnapp.no"/>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body>
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<header>
+
+    <div class="container">
+        <a href="/">
+            <div id=header>
+                <h1>Grønt NAPP</h1>
+                <p class="lead">Spis bærekraftig sjømat med god samvittighet!</p>
+            </div>
+        </a>
+        <small class="pull-right">En app i beta fra <a href="http://marinbiologene.no">Marinbiologene</a> og <a href="http://bgraphic.no">bGraphic</a>.</small>
+
+    </div>
+
+</header>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <div id="filter" class="pull-left">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="app" class="container">
+
+</div>
+
+<!-- Template -->
+
+<script id="seafoodItemTemplate" type="text/template">
+    <a class="seafood <%= key %> <%= status %>" href="#<%= key %>"><%= name %>
+        <span>
+        <% if (status == 'green') { %>
+            - et godt valg
+        <% } else if (status == 'red') { %>
+            - et dårlig valg
+        <% } else { %>
+
+        <% } %>
+        </span>
+
+        <i class="chevron icon-chevron-right" />
+    </a>
+</script>
+
+<script id="seafoodSearchTemplate" type="text/template">
+
+    <form id="filter-search" class="navbar-form">
+        <input type="text" class="search-query" placeholder="Søk etter sjømat">
+    </form>
+
+</script>
+
+<script id="seafoodInfoTemplate" type="text/template">
+    <header>
+        <h2><%= name %></h2>
+    </header>
+
+    <blockquote>
+        <%= quote %>
+        <% if (quote_thanks) { %>
+        <small><%= quote_thanks %></small>
+        <% } %>
+    </blockquote>
+
+    <p>
+        <%= comment %>
+    </p>
+</script>
+
+<script id="seafoodEnvStatusInfoTemplate"  type="text/template">
+    <p>
+        <%= name %> er et
+        <strong>
+        <% if (env_status == "smil") { %>
+            godt klimavalg.
+        <% } else if (env_status == "ok") { %>
+            ok klimavalg.
+        <% } else if (env_status == "sur") { %>
+            dårlig klimvalg.
+        <% } %>
+        </strong>
+        <br/>
+        <small>
+        - Basert på Grønn Hverdags opplysninger om utslipp av klimagasser.
+        </small>
+    </p>
+</script>
+
+<script id="seafoodEnvStatusNoneInfoTemplate" type="text/template">
+    <p>
+        <%= name %> mangler klimainformasjon.
+        </a>
+    </p>
+</script>
+
+<script id="seafoodBadgesInfoTemplate" type="text/template">
+        <% if (krav && msc) { %>
+        <p>Se etter disse merkene: </p>
+        <% } else if (krav || msc) { %>
+        <p>Se etter dette merket: </p>
+        <% } %>
+
+        <p>
+            <% if (krav) { %>
+            <img src="http://napp.marinbiologene.no/images/krav.jpg" />
+            <% } %>
+
+            <% if (msc) { %>
+            <img src="http://napp.marinbiologene.no/images/msc.jpg" />
+            <% } %>
+        </p>
+
+</script>
+
+<script id="seafoodPictureInfoTemplate" type="text/template">
+        <p>
+            <img src="http://napp.marinbiologene.no/images/art/<%= img_src %>" class="img-polaroid"/>
+        </p>
+
+        <p>
+            <small>
+                <% if (photographer && copyright) { %>
+                <%= photographer %> | <%= copyright %>
+                <% } else if (photographer) { %>
+                <%= photographer %>
+                <% } else if (copyright) { %>
+                <%= copyright %>
+                <% } %>
+            </small>
+        <p>
+
+
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script src="js/vendor/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://underscorejs.org/underscore.js"></script>
+<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.7.min.js"></script>
+
+<script src="js/plugins.js"></script>
+
+<script src="js/models/seafood.js"></script>
+<script src="js/views/seafood-item.js"></script>
+<script src="js/views/seafood-directory.js"></script>
+<script src="js/views/seafood-info.js"></script>
+
+<script src="js/main.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-40484634-1', 'grontnapp.no');
+    ga('send', 'pageview');
+
+</script>
+</body>
+</html>
