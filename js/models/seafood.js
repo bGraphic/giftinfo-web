@@ -1,76 +1,47 @@
-var Seafood = Parse.Object.extend("Seafood", {
+var Poison = Parse.Object.extend("Poison", {
     initialize: function() {
-        _.bindAll(this, 'configureBadges');
 
-        this.bind("change:badges", this.configureBadges);
-    },
-
-    configureBadges: function () {
-        var self = this;
-
-        this.set("krav", false);
-        this.set("msc", false);
-
-        var badges = this.get("badges");
-
-        if(badges) {
-            badges = badges.split(",");
-
-            if(badges instanceof Array) {
-                _.each(badges, function (badge) {
-                    if(badge.trim() == "Krav")
-                        self.set("krav", true);
-                    if(badge.trim() == "MSC")
-                        self.set("msc", true);
-                });
-            } else {
-                if(badges.trim() == "Krav")
-                    self.set("krav", true);
-                if(badges.trim() == "MSC")
-                    self.set("msc", true);
-            }
-        }
     }
 });
 
-var SeafoodCollection = Parse.Collection.extend({
-    model: Seafood,
+var PoisonCollection = Parse.Collection.extend({
+    model: Poison,
 
     initialize: function() {
-        _.bindAll(this, 'getByKey');
+        _.bindAll(this, 'getBySlug');
     },
 
-    getByKey: function(key) {
+    getBySlug: function(slug) {
 
-        var mySeafood;
+        var myPoison;
 
-        this.each(function (seafood) {
+        this.each(function (poison) {
 
-                if(seafood.get("key").trim() == key.trim()) {
-                    mySeafood = seafood;
+                if(poison.get("key").trim() == key.trim()) {
+                    myPoison = poison;
                 }
             }
         );
 
-        return mySeafood;
+        return myPoison;
     },
 
     filterByString: function(filterString) {
 
-        var mySeafoods = new SeafoodCollection();
+        var myPoisons = new PoisonCollection();
         filterString = filterString.trim().toLowerCase();
 
-        this.each(function (seafood) {
-                var name = seafood.get("name").trim().toLowerCase();
+        this.each(function (poison) {
+                var name = poison.get("title").trim().toLowerCase();
+                var tags = poison.get("tags");
 
                 if(name.indexOf(filterString) > -1) {
-                    mySeafoods.add(seafood);
+                    myPoisons.add(poison);
                 }
             }
         );
 
-        return mySeafoods;
+        return myPoisons;
     }
-
 
 });

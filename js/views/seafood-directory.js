@@ -1,4 +1,4 @@
-var SeafoodDirectoryView = Parse.View.extend({
+var PoisonDirectoryView = Parse.View.extend({
     tagName: "ul",
     id: "seafood-collection",
     className: "nav nav-tabs nav-stacked",
@@ -6,41 +6,41 @@ var SeafoodDirectoryView = Parse.View.extend({
     initialize: function () {
         var self = this;
 
-        _.bindAll(this, 'addSeafoods', 'addOneSeafood', 'resetSeafoods');
+        _.bindAll(this, 'addPoisons', 'addOnePoison', 'resetPoisons');
 
-        this.model.bind("add", this.addSeafoods);
-        this.model.bind("reset", this.resetSeafoods);
+        this.model.bind("add", this.addPoisons);
+        this.model.bind("reset", this.resetPoisons);
 
     },
 
-    addSeafoods: function (seafoods) {
-        if(seafoods instanceof Array)
-            seafoods.each(this.addOneSeafood);
+    addPoisons: function (poisons) {
+        if(poisons instanceof Array)
+            poisons.each(this.addOnePoison);
         else
-            this.addOneSeafood(seafoods);
+            this.addOnePoison(poisons);
 
     },
 
-    resetSeafoods: function (newCollection) {
+    resetPoisons: function (newCollection) {
         this.$el.html("");
-        newCollection.each(this.addOneSeafood);
+        newCollection.each(this.addOnePoison);
     },
 
-    addOneSeafood: function (seafood) {
-        var seafoodView = new SeafoodListItemView({
-            model: seafood
+    addOnePoison: function (poison) {
+        var poisonView = new PoisonListItemView({
+            model: poison
         });
-        this.$el.append(seafoodView.render().el);
+        this.$el.append(poisonView.render().el);
     }
 });
 
-var SeafoodListItemView = Parse.View.extend({
+var PoisonListItemView = Parse.View.extend({
     tagName: "li",
 
     template: _.template($('#seafoodItemTemplate').html()),
 
     events: {
-        "click a.seafood" : "toggleSeafoodInfo"
+        "click a.seafood" : "togglePoisonInfo"
     },
 
     render: function () {
@@ -48,7 +48,7 @@ var SeafoodListItemView = Parse.View.extend({
         return this;
     },
 
-    toggleSeafoodInfo: function () {
+    togglePoisonInfo: function () {
 
         if(this.$el.children("article.info")) {
             this.$el.children("article.info").toggle();
@@ -58,7 +58,7 @@ var SeafoodListItemView = Parse.View.extend({
     }
 });
 
-var SeafoodSearchDirectoryView = Parse.View.extend({
+var PoisonSearchDirectoryView = Parse.View.extend({
     el: "#filter",
 
     template: _.template($('#seafoodSearchTemplate').html()),
@@ -78,19 +78,19 @@ var SeafoodSearchDirectoryView = Parse.View.extend({
     filterCollection: function () {
         var filter = this.$el.find("input").val();
 
-        if(!this.originalSeafoodCollection)
-            this.originalSeafoodCollection = new SeafoodCollection().reset(this.model.toJSON())
+        if(!this.originalPoisonCollection)
+            this.originalPoisonCollection = new PoisonCollection().reset(this.model.toJSON())
 
         if(filter.trim() != "")
-            this.model.reset(this.originalSeafoodCollection.filterByString(filter).toJSON());
+            this.model.reset(this.originalPoisonCollection.filterByString(filter).toJSON());
         else
-            this.model.reset(this.originalSeafoodCollection.toJSON());
+            this.model.reset(this.originalPoisonCollection.toJSON());
 
         if(this.model.length == 1) {
 
             console.log("length == 1");
-            this.app.selectedKey = this.model.at(0).get("key");
-            this.app.openSelectedSeafood(false);
+            this.app.selectedSlug = this.model.at(0).get("slug");
+            this.app.openSelectedPoison(false);
         }
 
 

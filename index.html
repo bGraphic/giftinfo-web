@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Grønt NAPP</title>
+    <title>Giftinformasjon</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
@@ -36,11 +36,11 @@
     <div class="container">
         <a href="/">
             <div id=header>
-                <h1>Grønt NAPP</h1>
-                <p class="lead">Spis bærekraftig sjømat med god samvittighet!</p>
+                <h1>Giftinformasjon</h1>
+                <p class="lead">Tagline!</p>
             </div>
         </a>
-        <small class="pull-right">En app i beta fra <a href="http://marinbiologene.no">Marinbiologene</a> og <a href="http://bgraphic.no">bGraphic</a>.</small>
+        <small class="pull-right">En app i beta fra <a href="http://bgraphic.no">bGraphic & friends</a>.</small>
 
     </div>
 
@@ -63,16 +63,7 @@
 <!-- Template -->
 
 <script id="seafoodItemTemplate" type="text/template">
-    <a class="seafood <%= key %> <%= status %>" href="#<%= key %>"><%= name %>
-        <span>
-        <% if (status == 'green') { %>
-            - et godt valg
-        <% } else if (status == 'red') { %>
-            - et dårlig valg
-        <% } else { %>
-
-        <% } %>
-        </span>
+    <a class="seafood <%= slug %>" href="#<%= slug %>"><%= title %>
 
         <i class="chevron icon-chevron-right" />
     </a>
@@ -81,7 +72,7 @@
 <script id="seafoodSearchTemplate" type="text/template">
 
     <form id="filter-search" class="navbar-form">
-        <input type="text" class="search-query" placeholder="Søk etter sjømat">
+        <input type="text" class="search-query" placeholder="Søk etter giftinformasjon">
     </form>
 
 </script>
@@ -189,7 +180,7 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-40484634-1', 'grontnapp.no');
+    ga('create', '', '');
     ga('send', 'pageview');
 
 </script>

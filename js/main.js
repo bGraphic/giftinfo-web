@@ -2,18 +2,16 @@ var AppRouter = Parse.Router.extend({
 
     routes: {
         "":                 "home",
-        ":seafoodKey":   "seafood"
+        ":poisonSlug":   "poison"
     },
 
     home: function() {
 
-        this.seafoodCollection = new SeafoodCollection();
-
-        this.searchView =
+        this.poisonCollection = new PoisonCollection();
 
         $("#app").html('<img id="seafood-spinner" src="img/spinner.gif">');
-        $("#app").prepend(new SeafoodDirectoryView({model: this.seafoodCollection}).el);
-        $("#filter").append(new SeafoodSearchDirectoryView({model: this.seafoodCollection, app: this}).el);
+        $("#app").prepend(new PoisonDirectoryView({model: this.poisonCollection}).el);
+        $("#filter").append(new PoisonSearchDirectoryView({model: this.poisonCollection, app: this}).el);
 
         this.batchRetrieve(0);
 
@@ -22,32 +20,32 @@ var AppRouter = Parse.Router.extend({
         $(".seafood i.chevron").addClass("icon-chevron-right");
     },
 
-    seafood: function(seafoodKey) {
+    poison: function(poisonSlug) {
 
-        this.selectedKey = seafoodKey;
+        this.slectedSlug = poisonSlug;
 
-        if(!this.seafoodCollection) {
+        if(!this.poisonCollection) {
             this.home();
         }
         else
-            this.openSelectedSeafood(false);
+            this.openSelectedPoison(false);
     },
 
-    openSelectedSeafood: function(scroll) {
+    openSelectedPoison: function(scroll) {
 
-        if(!this.selectedKey)
+        if(!this.selectedSlug)
             return;
 
-        var seafood = this.seafoodCollection.getByKey(this.selectedKey);
+        var poison = this.poisonCollection.getBySlug(this.selectedSlug);
 
-        var seafoodInfoView = new SeafoodInfoView({
-            model: seafood
+        var poisonInfoView = new PoisonInfoView({
+            model: poison
         });
 
-        $el = $(".seafood."+this.selectedKey).parent();
+        $el = $(".seafood."+this.selectedSlug).parent();
 
         if($el.children("article.info").length == 0)
-            $el.append(seafoodInfoView.render().el);
+            $el.append(poisonInfoView.render().el);
 
         $el.children("article.info").show();
         $el.find(".seafood i.chevron").addClass("icon-chevron-down");
@@ -59,14 +57,14 @@ var AppRouter = Parse.Router.extend({
             $('html,body').animate({scrollTop: $el.offset().top});
         }
 
-        this.selectedKey = null;
+        this.selectedSlug = null;
     },
 
     batchRetrieve: function (startIndex) {
         self = this;
         var limit = 15;
 
-        var query = new Parse.Query(Seafood);
+        var query = new Parse.Query(Poison);
         query.skip(startIndex);
         query.limit(limit);
         query.ascending("name");
@@ -74,14 +72,14 @@ var AppRouter = Parse.Router.extend({
         query.find({
             success: function(results) {
                 if(startIndex == 0)
-                    self.seafoodCollection.add(results);
+                    self.poisonCollection.add(results);
                 else
-                    self.seafoodCollection.add(results);
+                    self.poisonCollection.add(results);
 
                 if(results.length == limit)
                     self.batchRetrieve(startIndex+limit);
                 else {
-                    self.openSelectedSeafood(true);
+                    self.openSelectedPoison(true);
                     $("#seafood-spinner").remove();
                 }
             },
@@ -103,7 +101,7 @@ $(function() {
 
     Parse.$ = jQuery;
 
-    Parse.initialize("zdothuhw5y2TiDtKyOb20IHIAcWDIRuZwnCVjHIf", "o4vTVCro9Rwr7RbbKa8FTzVFwBOM1CipFDBBi9C2");
+    Parse.initialize("shC8z7Gd5GkJdtubJqdk6fIvFSXk7vnfYaZCBTD4", "vNDVdJnP7rKCxfIm7QfWROrgvbeg1T6844CCoW0o");
 
     var app = new AppRouter();
     Parse.history.start();
