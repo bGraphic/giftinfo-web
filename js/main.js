@@ -58,8 +58,6 @@ var AppRouter = Parse.Router.extend({
 
     poison: function(poisonSlug) {
 
-        console.log("Poison slug: "+ poisonSlug);
-
         this.poisonDirectoryView.selectedSlug = poisonSlug;
 
         this.poisonList();
@@ -97,11 +95,6 @@ var AppRouter = Parse.Router.extend({
 
 
 $(function() {
-    $('body').popover({
-        selector: '[data-toggle="popover"]',
-        html: true,
-        placement: 'top'
-    });
 
     Parse.$ = jQuery;
 
