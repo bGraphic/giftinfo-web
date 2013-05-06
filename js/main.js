@@ -74,7 +74,7 @@ var AppRouter = Parse.Router.extend({
         var query = new Parse.Query(Poison);
         query.skip(startIndex);
         query.limit(limit);
-        query.ascending("title");
+        query.ascending("name");
 
         query.find({
             success: function(results) {

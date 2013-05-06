@@ -15,7 +15,7 @@ var PoisonCollection = Parse.Collection.extend({
 
         this.each(function (poison) {
 
-                if(poison.id.trim() == slug.trim()) {
+                if(poison.get("slug").trim() == slug.trim()) {
                     myPoison = poison;
                 }
             }
@@ -30,7 +30,7 @@ var PoisonCollection = Parse.Collection.extend({
         filterString = filterString.trim().toLowerCase();
 
         this.each(function (poison) {
-                var name = poison.get("title").trim().toLowerCase();
+                var name = poison.get("name").trim().toLowerCase();
                 var tags = poison.get("tags");
 
                 if(name.indexOf(filterString) > -1) {
