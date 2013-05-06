@@ -2,6 +2,7 @@ var AppRouter = Parse.Router.extend({
 
     routes: {
         "":                        "home",
+        "om":                     "about",
         "info":             "articleList",
         "info/:articleSlug":    "article",
         "liste":             "poisonList",
@@ -20,6 +21,8 @@ var AppRouter = Parse.Router.extend({
         this.articleCollection.fetch({
             success: function(collection) {
                 $("#poison-spinner").remove();
+                self.articlesLoaded = true;
+
             },
             error: function(collection, error) {
                 console.warn("Error: " + error);
@@ -41,13 +44,32 @@ var AppRouter = Parse.Router.extend({
 
     },
 
+    about: function() {
+        var query = new Parse.Query(Article);
+        query.equalTo("slug", "om");
+        query.first({
+            success: function(article) {
+                var articleView = new ArticleView({
+                    model: article
+                });
+
+                $("#app").html(articleView.render().el);
+            },
+            error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
+    },
+
     articleList: function () {
         $("#app").html(this.articleDirectoryView.el);
     },
 
     article: function(articleSlug) {
 
-        this.articleDirectoryView.selectedSlug = articleSlug;
+        this.articleDirectoryView.selectedArticleSlug = articleSlug;
+
+        console.log("article");
 
         this.articleList();
     },
@@ -58,7 +80,7 @@ var AppRouter = Parse.Router.extend({
 
     poison: function(poisonSlug) {
 
-        this.poisonDirectoryView.selectedSlug = poisonSlug;
+        this.poisonDirectoryView.selectedPoisonSlug = poisonSlug;
 
         this.poisonList();
     },

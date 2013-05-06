@@ -32,13 +32,13 @@ var PoisonDirectoryView = Parse.View.extend({
 
         this.$el.append(poisonView.render().el);
 
-        if(this.collection.length == 1 || poison.get("slug") == this.selectedSlug)
+        if(this.collection.length == 1 || poison.get("slug") == this.selectedPoisonSlug)
             poisonView.togglePoisonInfo();
 
-        if(poison.get("slug") == this.selectedSlug)
+        if(poison.get("slug") == this.selectedPoisonSlug)
             $('html,body').animate({scrollTop: poisonView.$el.offset().top});
 
-        this.selectedSlug = null;
+        this.selectedPoisonSlug = null;
     }
 });
 

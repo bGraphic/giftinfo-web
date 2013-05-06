@@ -1,6 +1,7 @@
 body {
     overflow-x: hidden;
     padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 a {
@@ -92,24 +93,18 @@ ul.directory li .item i.chevron {
     opacity: 0.25;
 }
 
+ul.directory .info a.more-info:hover i {
+    opacity: 0.75;
+}
+
 ul.directory .info {
     border: 1px solid #ddd;
     padding: 20px 40px;
     display: none;
 }
 
-ul.directory .info i {
-    vertical-align: super;
-    opacity: 0.8;
-    margin-left: -5px;
-}
-
-ul.directory .info a.more-info:hover i {
-    opacity: 0.75;
-}
-
-ul.directory .info .badges img {
-    height: 70px;
+ul.directory ul, ul.directory ol {
+    margin-bottom: 12px;
 }
 
 #poison-spinner {

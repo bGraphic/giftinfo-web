@@ -33,13 +33,15 @@ var ArticleDirectoryView = Parse.View.extend({
 
         this.$el.append(articleView.render().el);
 
-        if(article.get("slug") == this.selectedSlug)
+        if(article.get("slug") == this.selectedArticleSlug)
         {
+
+            console.log("test");
             articleView.toggleArticleInfo();
             $('html,body').animate({scrollTop: articleView.$el.offset().top});
         }
 
-        this.selectedSlug = null;
+        this.selectedArticleSlug = null;
     }
 });
 
