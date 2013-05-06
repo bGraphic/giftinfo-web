@@ -1,23 +1,96 @@
 var AppRouter = Parse.Router.extend({
 
     routes: {
-        "":                 "home",
-        ":poisonSlug":   "poison"
+        "":                        "home",
+        "giftliste":         "poisonList",
+        "gift/:poisonSlug":      "poison",
+        "info/:articleSlug":    "article"
+    },
+
+    initialize: function () {
+
+        $("#app").after('<img id="poison-spinner" src="img/spinner.gif">');
+
+        this.articleCollection = new ArticleCollection();
+        this.articleDirectoryView = new ArticleDirectoryView({model: this.articleCollection});
+
+        self = this;
+
+        this.articleCollection.fetch({
+            success: function(collection) {
+                $("#poison-spinner").remove();
+                self.openSelectedArticle(true);
+            },
+            error: function(collection, error) {
+                console.warn("Error: " + error);
+            }
+        });
+
+        this.poisonCollection = new PoisonCollection();
+        this.poisonDirectoryView = new PoisonDirectoryView({model: this.poisonCollection});
+        this.poisonSearchView = new PoisonSearchDirectoryView({model: this.poisonCollection, app: this});
+
+        $("#filter").append(this.poisonSearchView.el);
+
+        this.batchRetrieve(0);
     },
 
     home: function() {
 
-        this.poisonCollection = new PoisonCollection();
+        this.articleList();
 
-        $("#app").html('<img id="poison-spinner" src="img/spinner.gif">');
-        $("#app").prepend(new PoisonDirectoryView({model: this.poisonCollection}).el);
-        $("#filter").append(new PoisonSearchDirectoryView({model: this.poisonCollection, app: this}).el);
+    },
 
-        this.batchRetrieve(0);
+    articleList: function () {
+        $("#app").html(this.articleDirectoryView.el);
+    },
 
-        $("article.info").hide();
-        $(".poison i.chevron").removeClass("icon-chevron-down");
-        $(".poison i.chevron").addClass("icon-chevron-right");
+    article: function(articleSlug) {
+
+        console.log("Article slug: "+ articleSlug);
+
+        this.selectedSlug = articleSlug;
+
+        this.articleList();
+
+        this.openSelectedArticle(false);
+    },
+
+    openSelectedArticle: function(scroll) {
+
+        if(!this.selectedSlug)
+            return;
+
+        console.log("open article");
+
+        var article = this.articleCollection.getBySlug(this.selectedSlug);
+
+        console.log("Article by slug " + article);
+
+        var articleView = new ArticleView({
+            model: article
+        });
+
+        $el = $(".item."+this.selectedSlug).parent();
+
+        if($el.children("article.info").length == 0)
+            $el.append(articleView.render().el);
+
+        $el.children("article.info").show();
+        $el.find(".item i.chevron").addClass("icon-chevron-down");
+        $el.find(".item i.chevron").removeClass("icon-chevron-right");
+
+
+        if(scroll) {
+
+            $('html,body').animate({scrollTop: $el.offset().top});
+        }
+
+        this.selectedSlug = null;
+    },
+
+    poisonList: function() {
+        $("#app").html(this.poisonDirectoryView.el);
     },
 
     poison: function(poisonSlug) {
@@ -26,11 +99,7 @@ var AppRouter = Parse.Router.extend({
 
         this.selectedSlug = poisonSlug;
 
-        if(!this.poisonCollection) {
-            this.home();
-        }
-        else
-            this.openSelectedPoison(false);
+        this.openSelectedPoison(false);
     },
 
     openSelectedPoison: function(scroll) {
@@ -38,10 +107,10 @@ var AppRouter = Parse.Router.extend({
         if(!this.selectedSlug)
             return;
 
+        this.poisonList();
+
         var poison = this.poisonCollection.getBySlug(this.selectedSlug);
         var parent = poison.get("parent");
-
-        console.log("Parent" + parent);
 
         if(parent) {
             parent = this.poisonCollection.get(parent.id);
@@ -52,14 +121,14 @@ var AppRouter = Parse.Router.extend({
             parent: parent
         });
 
-        $el = $(".poison."+this.selectedSlug).parent();
+        $el = $(".item."+this.selectedSlug).parent();
 
         if($el.children("article.info").length == 0)
             $el.append(poisonInfoView.render().el);
 
         $el.children("article.info").show();
-        $el.find(".poison i.chevron").addClass("icon-chevron-down");
-        $el.find(".poison i.chevron").removeClass("icon-chevron-right");
+        $el.find(".item i.chevron").addClass("icon-chevron-down");
+        $el.find(".item i.chevron").removeClass("icon-chevron-right");
 
 
         if(scroll) {

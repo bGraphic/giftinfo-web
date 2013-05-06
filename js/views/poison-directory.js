@@ -1,7 +1,6 @@
 var PoisonDirectoryView = Parse.View.extend({
     tagName: "ul",
-    id: "poison-collection",
-    className: "nav nav-tabs nav-stacked",
+    className: "directory nav nav-tabs nav-stacked",
 
     initialize: function () {
         var self = this;
@@ -40,7 +39,7 @@ var PoisonListItemView = Parse.View.extend({
     template: _.template($('#poisonItemTemplate').html()),
 
     events: {
-        "click a.poison" : "togglePoisonInfo"
+        "click a.item" : "togglePoisonInfo"
     },
 
     render: function () {
@@ -50,10 +49,12 @@ var PoisonListItemView = Parse.View.extend({
 
     togglePoisonInfo: function () {
 
+        console.log("toggle");
+
         if(this.$el.children("article.info")) {
             this.$el.children("article.info").toggle();
-            this.$el.find(".poison i.chevron").toggleClass("icon-chevron-down");
-            this.$el.find(".poison i.chevron").toggleClass("icon-chevron-right");
+            this.$el.find(".info i.chevron").toggleClass("icon-chevron-down");
+            this.$el.find(".info i.chevron").toggleClass("icon-chevron-right");
         }
     }
 });
@@ -91,6 +92,9 @@ var PoisonSearchDirectoryView = Parse.View.extend({
             this.app.selectedSlug = this.model.at(0).get("slug");
 
             this.app.openSelectedPoison(false);
+        } else {
+
+            this.app.poisonList();
         }
 
 

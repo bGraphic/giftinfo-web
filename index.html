@@ -60,11 +60,27 @@
 
 </div>
 
-<!-- Template -->
+<!-- Templates -->
+
+<script id="articleItemTemplate" type="text/template">
+    <a class="item <%= slug %>" href="#info/<%= slug %>">
+        <%= title %>
+        <i class="chevron icon-chevron-right" />
+    </a>
+</script>
+
+<script id="articleTemplate" type="text/template">
+    <header>
+        <h2><%= title %></h2>
+    </header>
+
+    <%= content %>
+
+</script>
 
 <script id="poisonItemTemplate" type="text/template">
-    <a class="poison <%= slug %>" href="#<%= slug %>"><%= name %>
-
+    <a class="item <%= slug %>" href="#gift/<%= slug %>">
+        <%= name %>
         <i class="chevron icon-chevron-right" />
     </a>
 </script>
@@ -131,6 +147,9 @@
 <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.7.min.js"></script>
 
 <script src="js/plugins.js"></script>
+
+<script src="js/models/article.js"></script>
+<script src="js/views/article-directory.js"></script>
 
 <script src="js/models/poison.js"></script>
 <script src="js/views/poison-directory.js"></script>

@@ -68,7 +68,7 @@ header.page small {
     padding-top: 10px;
 }
 
-ul#poison-collection li .poison {
+ul.directory li .item {
     font-size: 130%;
     font-weight: normal;
 
@@ -87,7 +87,7 @@ ul#poison-collection li .poison {
     background-size: 40px 56px;
 }
 
-ul#poison-collection li .poison i.chevron {
+ul.directory li .item i.chevron {
     position: absolute;
     top: 50%;
     right: 15px;
@@ -96,23 +96,23 @@ ul#poison-collection li .poison i.chevron {
     opacity: 0.25;
 }
 
-ul#poison-collection .info {
+ul.directory .info {
     border: 1px solid #ddd;
     padding: 20px 40px;
     display: none;
 }
 
-ul#poison-collection .info i {
+ul.directory .info i {
     vertical-align: super;
     opacity: 0.8;
     margin-left: -5px;
 }
 
-ul#poison-collection .info a.more-info:hover i {
+ul.directory .info a.more-info:hover i {
     opacity: 0.75;
 }
 
-ul#poison-collection .info .badges img {
+ul.directory .info .badges img {
     height: 70px;
 }
 
@@ -202,12 +202,12 @@ ul#poison-collection .info .badges img {
         border-bottom-left-radius: 0;
     }
 
-    #poison-collection .info {
+    ul.directory .info {
         padding-left: 20px;
         padding-right: 20px;
     }
 
-    ul#poison-collection li .poison span {
+    ul.directory li .item span {
         clear: both;
         display: block;
     }
