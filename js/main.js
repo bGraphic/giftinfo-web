@@ -35,18 +35,21 @@ var AppRouter = Parse.Router.extend({
 
     openSelectedPoison: function(scroll) {
 
-        console.log("open poison, slected: " + this.selectedSlug);
-
         if(!this.selectedSlug)
             return;
 
-
         var poison = this.poisonCollection.getBySlug(this.selectedSlug);
+        var parent = poison.get("parent");
 
-        console.log("posion " + poison);
+        console.log("Parent" + parent);
+
+        if(parent) {
+            parent = this.poisonCollection.get(parent.id);
+        }
 
         var poisonInfoView = new PoisonInfoView({
-            model: poison
+            model: poison,
+            parent: parent
         });
 
         $el = $(".poison."+this.selectedSlug).parent();

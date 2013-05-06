@@ -92,19 +92,35 @@
         </dd>
         <dt>Risiko for forgiftning</dt>
         <dd>
-            <%= risk %>
+            <% if(risk) { %>
+                <%= risk %>
+            <% } else { %>
+                Mangler informasjon om risiko.
+            <% } %>
         </dd>
         <dt>Mulige symtomer/virkning</dt>
         <dd>
-            <%= symptoms %>
+            <% if(symptoms) { %>
+                <%= symptoms %>
+            <% } else { %>
+                Mangler informasjon om symptomer.
+            <% } %>
         </dd>
         <dt>Spesielle tiltak</dt>
         <dd>
-            <%= action %>
+            <% if(action) { %>
+                <%= action %>
+            <% } else { %>
+                Mangler informasjon om spesielle tiltak.
+            <% } %>
         </dd>
     </dl>
 
-    <%= content %>
+    <% if(content) { %>
+        <%= content %>
+    <% } else { %>
+        Mangler innhold.
+    <% } %>
 
 </script>
 
