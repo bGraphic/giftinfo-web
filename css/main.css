@@ -74,11 +74,7 @@ ul.directory li .item {
 
     position: relative;
 
-    background-image: url(../img/napp-icon_maybe.png);
-    background-repeat: no-repeat;
-    background-position: 15px center;
-
-    padding-left: 70px;
+    padding-left: 30px;
     padding-right: 40px;
 
     padding-top: 30px;
