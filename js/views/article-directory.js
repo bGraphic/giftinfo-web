@@ -7,8 +7,8 @@ var ArticleDirectoryView = Parse.View.extend({
 
         _.bindAll(this, 'addArticles', 'addOneArticle', 'resetArticles');
 
-        this.model.bind("add", this.addArticles);
-        this.model.bind("reset", this.resetArticles);
+        this.collection.bind("add", this.addArticles);
+        this.collection.bind("reset", this.resetArticles);
 
     },
 
@@ -26,10 +26,18 @@ var ArticleDirectoryView = Parse.View.extend({
     },
 
     addOneArticle: function (article) {
+
         var articleView = new ArticleListItemView({
             model: article
         });
+
         this.$el.append(articleView.render().el);
+
+        if(article.get("slug") == this.selectedSlug)
+        {
+            articleView.toggleArticleInfo();
+            $('html,body').animate({scrollTop: articleView.$el.offset().top});
+        }
     }
 });
 
@@ -49,11 +57,23 @@ var ArticleListItemView = Parse.View.extend({
 
     toggleArticleInfo: function () {
 
+        var articleView = new ArticleView({
+            model: this.model
+        });
+
+        if(this.$el.children("article.info").length == 0)
+            this.$el.append(articleView.render().el);
+
         if(this.$el.children("article.info")) {
             this.$el.children("article.info").toggle();
             this.$el.find(".item i.chevron").toggleClass("icon-chevron-down");
             this.$el.find(".item i.chevron").toggleClass("icon-chevron-right");
         }
+
+        if(this.$el.children("article.info").is(":hidden"))
+            Parse.history.navigate("info");
+        else
+            Parse.history.navigate("info/" + this.model.get("slug"));
     }
 });
 

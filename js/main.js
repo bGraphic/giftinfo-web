@@ -2,9 +2,10 @@ var AppRouter = Parse.Router.extend({
 
     routes: {
         "":                        "home",
-        "giftliste":         "poisonList",
-        "gift/:poisonSlug":      "poison",
-        "info/:articleSlug":    "article"
+        "info":             "articleList",
+        "info/:articleSlug":    "article",
+        "liste":             "poisonList",
+        ":poisonSlug":           "poison"
     },
 
     initialize: function () {
@@ -12,14 +13,13 @@ var AppRouter = Parse.Router.extend({
         $("#app").after('<img id="poison-spinner" src="img/spinner.gif">');
 
         this.articleCollection = new ArticleCollection();
-        this.articleDirectoryView = new ArticleDirectoryView({model: this.articleCollection});
+        this.articleDirectoryView = new ArticleDirectoryView({collection: this.articleCollection});
 
         self = this;
 
         this.articleCollection.fetch({
             success: function(collection) {
                 $("#poison-spinner").remove();
-                self.openSelectedArticle(true);
             },
             error: function(collection, error) {
                 console.warn("Error: " + error);
@@ -47,46 +47,9 @@ var AppRouter = Parse.Router.extend({
 
     article: function(articleSlug) {
 
-        console.log("Article slug: "+ articleSlug);
-
-        this.selectedSlug = articleSlug;
+        this.articleDirectoryView.selectedSlug = articleSlug;
 
         this.articleList();
-
-        this.openSelectedArticle(false);
-    },
-
-    openSelectedArticle: function(scroll) {
-
-        if(!this.selectedSlug)
-            return;
-
-        console.log("open article");
-
-        var article = this.articleCollection.getBySlug(this.selectedSlug);
-
-        console.log("Article by slug " + article);
-
-        var articleView = new ArticleView({
-            model: article
-        });
-
-        $el = $(".item."+this.selectedSlug).parent();
-
-        if($el.children("article.info").length == 0)
-            $el.append(articleView.render().el);
-
-        $el.children("article.info").show();
-        $el.find(".item i.chevron").addClass("icon-chevron-down");
-        $el.find(".item i.chevron").removeClass("icon-chevron-right");
-
-
-        if(scroll) {
-
-            $('html,body').animate({scrollTop: $el.offset().top});
-        }
-
-        this.selectedSlug = null;
     },
 
     poisonList: function() {
@@ -97,46 +60,9 @@ var AppRouter = Parse.Router.extend({
 
         console.log("Poison slug: "+ poisonSlug);
 
-        this.selectedSlug = poisonSlug;
-
-        this.openSelectedPoison(false);
-    },
-
-    openSelectedPoison: function(scroll) {
-
-        if(!this.selectedSlug)
-            return;
+        this.poisonDirectoryView.selectedSlug = poisonSlug;
 
         this.poisonList();
-
-        var poison = this.poisonCollection.getBySlug(this.selectedSlug);
-        var parent = poison.get("parent");
-
-        if(parent) {
-            parent = this.poisonCollection.get(parent.id);
-        }
-
-        var poisonInfoView = new PoisonInfoView({
-            model: poison,
-            parent: parent
-        });
-
-        $el = $(".item."+this.selectedSlug).parent();
-
-        if($el.children("article.info").length == 0)
-            $el.append(poisonInfoView.render().el);
-
-        $el.children("article.info").show();
-        $el.find(".item i.chevron").addClass("icon-chevron-down");
-        $el.find(".item i.chevron").removeClass("icon-chevron-right");
-
-
-        if(scroll) {
-
-            $('html,body').animate({scrollTop: $el.offset().top});
-        }
-
-        this.selectedSlug = null;
     },
 
     batchRetrieve: function (startIndex) {
@@ -158,7 +84,6 @@ var AppRouter = Parse.Router.extend({
                 if(results.length == limit)
                     self.batchRetrieve(startIndex+limit);
                 else {
-                    self.openSelectedPoison(true);
                     $("#poison-spinner").remove();
                 }
             },

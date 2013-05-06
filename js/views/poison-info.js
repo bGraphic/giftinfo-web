@@ -1,4 +1,4 @@
-var PoisonInfoView = Parse.View.extend({
+var PoisonView = Parse.View.extend({
     tagName: "article",
     className: "info",
 

@@ -13,8 +13,6 @@ var ArticleCollection = Parse.Collection.extend({
 
         var object;
 
-        console.log("looking for " + slug + " in array " + this.length);
-
         this.each(function (objectInArray) {
 
                 if(objectInArray.get("slug").trim() == slug.trim()) {
