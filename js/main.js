@@ -27,8 +27,8 @@ var AppRouter = Parse.Router.extend({
         });
 
         this.poisonCollection = new PoisonCollection();
-        this.poisonDirectoryView = new PoisonDirectoryView({model: this.poisonCollection});
-        this.poisonSearchView = new PoisonSearchDirectoryView({model: this.poisonCollection, app: this});
+        this.poisonDirectoryView = new PoisonDirectoryView({collection: this.poisonCollection});
+        this.poisonSearchView = new PoisonSearchDirectoryView({collection: this.poisonCollection, app: this});
 
         $("#filter").append(this.poisonSearchView.el);
 

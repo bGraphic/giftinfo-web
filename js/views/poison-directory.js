@@ -7,8 +7,8 @@ var PoisonDirectoryView = Parse.View.extend({
 
         _.bindAll(this, 'addPoisons', 'addOnePoison', 'resetPoisons');
 
-        this.model.bind("add", this.addPoisons);
-        this.model.bind("reset", this.resetPoisons);
+        this.collection.bind("add", this.addPoisons);
+        this.collection.bind("reset", this.resetPoisons);
 
     },
 
@@ -32,11 +32,13 @@ var PoisonDirectoryView = Parse.View.extend({
 
         this.$el.append(poisonView.render().el);
 
-        if(poison.get("slug") == this.selectedSlug)
-        {
+        if(this.collection.length == 1 || poison.get("slug") == this.selectedSlug)
             poisonView.togglePoisonInfo();
+
+        if(poison.get("slug") == this.selectedSlug)
             $('html,body').animate({scrollTop: poisonView.$el.offset().top});
-        }
+
+        this.selectedSlug = null;
     }
 });
 
@@ -94,26 +96,20 @@ var PoisonSearchDirectoryView = Parse.View.extend({
     },
 
     filterCollection: function () {
+
+        Parse.history.navigate("liste");
+
         var filter = this.$el.find("input").val();
 
         if(!this.originalPoisonCollection)
-            this.originalPoisonCollection = new PoisonCollection().reset(this.model.toJSON())
+            this.originalPoisonCollection = new PoisonCollection().reset(this.collection.toJSON())
 
         if(filter.trim() != "")
-            this.model.reset(this.originalPoisonCollection.filterByString(filter).toJSON());
+            this.collection.reset(this.originalPoisonCollection.filterByString(filter).toJSON());
         else
-            this.model.reset(this.originalPoisonCollection.toJSON());
+            this.collection.reset(this.originalPoisonCollection.toJSON());
 
-        if(this.model.length == 1) {
-
-            this.app.selectedSlug = this.model.at(0).get("slug");
-
-            this.app.openSelectedPoison(false);
-        } else {
-
-            this.app.poisonList();
-        }
-
+        this.app.poisonList();
 
     },
 

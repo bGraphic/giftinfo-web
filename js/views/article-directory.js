@@ -38,6 +38,8 @@ var ArticleDirectoryView = Parse.View.extend({
             articleView.toggleArticleInfo();
             $('html,body').animate({scrollTop: articleView.$el.offset().top});
         }
+
+        this.selectedSlug = null;
     }
 });
 
