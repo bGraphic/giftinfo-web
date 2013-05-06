@@ -130,6 +130,6 @@ $(function() {
     Parse.initialize("shC8z7Gd5GkJdtubJqdk6fIvFSXk7vnfYaZCBTD4", "vNDVdJnP7rKCxfIm7QfWROrgvbeg1T6844CCoW0o");
 
     var app = new AppRouter();
-    Parse.history.start({pushState: true});
+    Parse.history.start();
 
 });
