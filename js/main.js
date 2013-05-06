@@ -45,20 +45,7 @@ var AppRouter = Parse.Router.extend({
     },
 
     about: function() {
-        var query = new Parse.Query(Article);
-        query.equalTo("slug", "om");
-        query.first({
-            success: function(article) {
-                var articleView = new ArticleView({
-                    model: article
-                });
-
-                $("#app").html(articleView.render().el);
-            },
-            error: function(error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        });
+        this.article("om");
     },
 
     articleList: function () {
@@ -67,11 +54,20 @@ var AppRouter = Parse.Router.extend({
 
     article: function(articleSlug) {
 
-        this.articleDirectoryView.selectedArticleSlug = articleSlug;
-
-        console.log("article");
-
-        this.articleList();
+        var query = new Parse.Query(Article);
+        query.equalTo("slug", articleSlug);
+        query.first({
+            success: function(article) {
+                var articleView = new ArticleView({
+                    model: article
+                });
+                $("#poison-spinner").remove();
+                $("#app").html(articleView.render().el);
+            },
+            error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
     },
 
     poisonList: function() {
@@ -80,9 +76,20 @@ var AppRouter = Parse.Router.extend({
 
     poison: function(poisonSlug) {
 
-        this.poisonDirectoryView.selectedPoisonSlug = poisonSlug;
-
-        this.poisonList();
+        var query = new Parse.Query(Poison);
+        query.equalTo("slug", poisonSlug);
+        query.first({
+            success: function(poison) {
+                var poisonView = new PoisonView({
+                    model: poison
+                });
+                $("#poison-spinner").remove();
+                $("#app").html(poisonView.render().el);
+            },
+            error: function(error) {
+                alert("Error: " + error.code + " " + error.message);
+            }
+        });
     },
 
     batchRetrieve: function (startIndex) {
