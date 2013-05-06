@@ -88,7 +88,7 @@ var PoisonSearchDirectoryView = Parse.View.extend({
 
         if(this.model.length == 1) {
 
-            console.log("search single slug " + this.app.selectedSlug);
+            this.app.selectedSlug = this.model.at(0).get("slug");
 
             this.app.openSelectedPoison(false);
         }
