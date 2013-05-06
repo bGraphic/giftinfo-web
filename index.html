@@ -84,13 +84,24 @@
 
     <dl class="poison-summary well">
         <dt>Har medisinsk kull effekt?</dt>
-        <dd>Nei</dd>
+        <dd><% if(use_coal) { %>
+                Ja
+            <% } else { %>
+                Nei
+            <% } %>
+        </dd>
         <dt>Risiko for forgiftning</dt>
-        <dd>Svært farlige</dd>
+        <dd>
+            <%= risk %>
+        </dd>
         <dt>Mulige symtomer/virkning</dt>
-        <dd>Sterkt etsende</dd>
+        <dd>
+            <%= symptoms %>
+        </dd>
         <dt>Spesielle tiltak</dt>
-        <dd>Unngå brekninger. Gi øyeblikkelig drikke, gjerne melk. Langvarig skylling ved søl på hud/øyne.</dd>
+        <dd>
+            <%= action %>
+        </dd>
     </dl>
 
     <%= content %>
