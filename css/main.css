@@ -1,5 +1,4 @@
 body {
-    overflow-x: hidden;
     padding-top: 30px;
     padding-bottom: 30px;
 }
@@ -32,6 +31,9 @@ header.page small {
 }
 
 #header {
+    overflow: hidden;
+    word-wrap: break-word;
+
     padding-top: 70px;
     padding-bottom: 40px;
     background-image: url(../img/icon-header.png);
@@ -83,6 +85,8 @@ h2.sectionTitle {
 article.info {
     border: 1px solid #ddd;
     padding: 20px 40px;
+
+    word-wrap: break-word;
 }
 
 article.info h1, article.info h2, article.info h3 {
