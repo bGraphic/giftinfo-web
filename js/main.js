@@ -14,15 +14,34 @@ var AppRouter = Parse.Router.extend({
         $("#app").after('<img id="poison-spinner" src="img/spinner.gif">');
 
         this.articleCollection = new ArticleCollection();
-        this.articleDirectoryView = new ArticleDirectoryView({collection: this.articleCollection});
+        this.articleDirectoryViewMore = new ArticleDirectoryView({
+            collection: new ArticleCollection(),
+            sectionTitle: "Mer informasjon om:"
+        });
+
+        this.articleDirectoryViewGeneralEmergency = new ArticleDirectoryView({
+            collection: new ArticleCollection(),
+            sectionTitle: "Generelle råd ved:"
+        });
 
         self = this;
 
         this.articleCollection.fetch({
             success: function(collection) {
                 $("#poison-spinner").remove();
-                self.articlesLoaded = true;
 
+                self.articleDirectoryViewMore.collection.reset([
+                    self.articleCollection.getBySlug("forebygging"),
+                    self.articleCollection.getBySlug("medisinsk-kull"),
+                    self.articleCollection.getBySlug("brekninger"),
+                    self.articleCollection.getBySlug("bevisstloshet")
+                ]);
+
+                self.articleDirectoryViewGeneralEmergency.collection.reset([
+                    self.articleCollection.getBySlug("svelging"),
+                    self.articleCollection.getBySlug("hudkontakt"),
+                    self.articleCollection.getBySlug("sol-i-oyet"),
+                    self.articleCollection.getBySlug("innanding")]);
             },
             error: function(collection, error) {
                 console.warn("Error: " + error);
@@ -49,7 +68,9 @@ var AppRouter = Parse.Router.extend({
     },
 
     articleList: function () {
-        $("#app").html(this.articleDirectoryView.el);
+        $("#app").html("");
+        $("#app").append(this.articleDirectoryViewGeneralEmergency.el);
+        $("#app").append(this.articleDirectoryViewMore.el);
     },
 
     article: function(articleSlug) {

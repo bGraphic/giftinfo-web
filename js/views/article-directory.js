@@ -10,6 +10,8 @@ var ArticleDirectoryView = Parse.View.extend({
         this.collection.bind("add", this.addArticles);
         this.collection.bind("reset", this.resetArticles);
 
+        this.sectionTitle = this.options.sectionTitle;
+
     },
 
     addArticles: function (article) {
@@ -22,6 +24,7 @@ var ArticleDirectoryView = Parse.View.extend({
 
     resetArticles: function (newCollection) {
         this.$el.html("");
+        this.$el.before("<h3>"+ this.sectionTitle +"</h3>");
         newCollection.each(this.addOneArticle);
     },
 
