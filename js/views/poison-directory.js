@@ -142,27 +142,30 @@ var PoisonSearchDirectoryView = Parse.View.extend({
 
         Parse.history.navigate("liste");
 
-        var filter = this.$el.find("input").val().trim();
+        var filterString = this.$el.find("input").val().trim().toLowerCase();
 
-        var notInSearchSelector = '.item:not(:contains('+ filter +'))';
-        var inSearchSelector = '.item:contains('+ filter +')';
+        this.collection.each(function (poison) {
+                var slug = poison.get("slug");
+                var name = poison.get("name").trim().toLowerCase();
+                var tags = poison.get("tags");
 
-        $('.item').parent().removeClass("not-in-search");
+                var isMatch = false;
 
-        $(notInSearchSelector).parent().addClass("not-in-search");
+                if(name.indexOf(filterString) > -1) {
+                    isMatch = true;
+                } else {
+                    if(tags) {
+                        tags.forEach(function(tag) {
+                            if(tag.indexOf(filterString) > -1) {
+                                isMatch = true;
+                            }
+                        });
+                    }
+                }
 
-
-        if($(inSearchSelector).length == 1 ) {
-
-            if(!this.poisonClicked) {
-                this.poisonClicked = true;
-                $(inSearchSelector).click();
+                $("#"+slug).parent().toggle(isMatch);
             }
-
-        } else {
-            this.poisonClicked = false;
-        }
-
+        );
     },
 
     render: function () {
