@@ -43,6 +43,9 @@ var AppRouter = Parse.Router.extend({
     },
 
     articleList: function () {
+
+        $("#app").parent().append('<img id="poison-spinner" src="img/spinner.gif">');
+
         var articleCollection = new ArticleCollection();
 
         var articleDirectoryViewMore = new ArticleDirectoryView({
@@ -72,7 +75,8 @@ var AppRouter = Parse.Router.extend({
                     articleCollection.getBySlug("svelging"),
                     articleCollection.getBySlug("hudkontakt"),
                     articleCollection.getBySlug("sol-i-oyet"),
-                    articleCollection.getBySlug("innanding")]);
+                    articleCollection.getBySlug("innanding")
+                ]);
             },
             error: function(collection, error) {
                 console.warn("Error: " + error);
@@ -82,9 +86,12 @@ var AppRouter = Parse.Router.extend({
         $("#app").html("");
         $("#app").append(articleDirectoryViewGeneralEmergency.el);
         $("#app").append(articleDirectoryViewMore.el);
+
     },
 
     article: function(articleSlug) {
+
+        $("#app").html('<img id="poison-spinner" src="img/spinner.gif">');
 
         var query = new Parse.Query(Article);
         query.equalTo("slug", articleSlug);
@@ -93,7 +100,6 @@ var AppRouter = Parse.Router.extend({
                 var articleView = new ArticleView({
                     model: article
                 });
-                $("#poison-spinner").remove();
                 $("#app").html(articleView.render().el);
             },
             error: function(error) {
