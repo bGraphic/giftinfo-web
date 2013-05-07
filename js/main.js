@@ -24,8 +24,8 @@ var AppRouter = Parse.Router.extend({
         query.limit(200);
         query.find({
             success: function(results) {
-                 self.poisonCollection.reset(results);
-                 console.log("Fetched " + results.length + " poisons");
+                console.log("Fetched " + results.length + " poisons");
+                self.poisonCollection.reset(results);
             },
             error: function(error) {
                   console.log("Error: " + error.code + " " + error.message);
@@ -108,20 +108,9 @@ var AppRouter = Parse.Router.extend({
 
     poison: function(poisonSlug) {
 
-        var query = new Parse.Query(Poison);
-        query.equalTo("slug", poisonSlug);
-        query.first({
-            success: function(poison) {
-                var poisonView = new PoisonView({
-                    model: poison
-                });
-                $("#poison-spinner").remove();
-                $("#app").html(poisonView.render().el);
-            },
-            error: function(error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        });
+        this.poisonDirectoryView.selectedPoisonSlug = poisonSlug;
+
+        this.poisonList();
     }
 
 });

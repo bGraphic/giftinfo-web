@@ -36,8 +36,12 @@ var PoisonDirectoryView = Parse.View.extend({
 
         this.$el.append(poisonView.render().el);
 
-        if(this.collection.length == 1)
+        if(poison.get("slug") == this.selectedPoisonSlug)      {
+            $('html,body').animate({scrollTop: poisonView.$el.offset().top});
             poisonView.togglePoisonInfo();
+        }
+
+
     }
 });
 
