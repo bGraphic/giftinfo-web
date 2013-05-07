@@ -30,7 +30,8 @@ var PoisonDirectoryView = Parse.View.extend({
 
     addOnePoison: function (poison) {
         var poisonView = new PoisonListItemView({
-            model: poison
+            model: poison,
+            collection: this.collection
         });
 
         this.$el.append(poisonView.render().el);
@@ -57,7 +58,8 @@ var PoisonListItemView = Parse.View.extend({
     togglePoisonInfo: function () {
 
         var poisonView = new PoisonView({
-            model: this.model
+            model: this.model,
+            collection: this.collection
         });
 
         if(this.$el.children("article.info").length == 0)
@@ -82,19 +84,19 @@ var PoisonView = Parse.View.extend({
 
     template: _.template($('#poisonTemplate').html()),
 
-    initialize:function () {
-        this.parent = this.options.parent;
-    },
-
     render: function () {
 
-        if(this.parent) {
+        var parentId = this.model.get("parent");
 
-            this.model.set("use_coal", this.parent.get("use_coal"));
-            this.model.set("risk", this.parent.get("risk"));
-            this.model.set("symptoms", this.parent.get("symptoms"));
-            this.model.set("action", this.parent.get("action"));
-            this.model.set("content", this.parent.get("content"));
+        if(parentId) {
+
+            var parent = this.collection.get(parentId);
+
+            this.model.set("use_coal", parent.get("use_coal"));
+            this.model.set("risk", parent.get("risk"));
+            this.model.set("symptoms", parent.get("symptoms"));
+            this.model.set("action", parent.get("action"));
+            this.model.set("content", parent.get("content"));
         }
 
         if(this.model.get("use_coal") == 1)
