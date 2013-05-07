@@ -69,7 +69,11 @@ header.page small {
     padding-top: 10px;
 }
 
-#app>article {
+h2.sectionTitle {
+    padding-left: 20px;
+}
+
+#app>article.info {
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -79,6 +83,35 @@ header.page small {
 article.info {
     border: 1px solid #ddd;
     padding: 20px 40px;
+}
+
+article.info h1, article.info h2, article.info h3 {
+    line-height: 100%;
+}
+
+article.info h1 {
+    margin-bottom: 30px;
+}
+
+article.info h2 {
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+article.info h3 {
+    font-size: 25px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+
+article.info > ul, article.info > ol {
+    margin-bottom: 12px;
+}
+
+article.info > ul li {
+    list-style-type: disc;
 }
 
 ul.directory li.not-in-search {
@@ -117,10 +150,6 @@ ul.directory .info {
     display: none;
 }
 
-ul.directory ul, ul.directory ol {
-    margin-bottom: 12px;
-}
-
 #poison-spinner {
     display: block;
     margin: auto;
@@ -142,6 +171,11 @@ ul.directory ul, ul.directory ol {
 }
 
 @media (max-width: 979px) and (min-width: 768px) {
+    #header {
+        margin-left: 0;
+        padding-left: 250px;
+    }
+
     .navbar .container {
         width: 724px;
     }

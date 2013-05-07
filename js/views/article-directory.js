@@ -24,7 +24,7 @@ var ArticleDirectoryView = Parse.View.extend({
 
     resetArticles: function (newCollection) {
         this.$el.html("");
-        this.$el.before("<h3>"+ this.sectionTitle +"</h3>");
+        this.$el.before("<h2 class='sectionTitle'>"+ this.sectionTitle +"</h2>");
         newCollection.each(this.addOneArticle);
     },
 
