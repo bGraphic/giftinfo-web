@@ -1,6 +1,7 @@
 var PoisonDirectoryView = Parse.View.extend({
     tagName: "ul",
     className: "directory nav nav-tabs nav-stacked",
+    id: "poisons",
 
     initialize: function () {
         var self = this;
@@ -136,19 +137,20 @@ var PoisonSearchDirectoryView = Parse.View.extend({
 
     filterCollection: function () {
 
+        if($("#app #poisons").length == 0)
+            this.app.poisonList();
+
         Parse.history.navigate("liste");
 
-        var filter = this.$el.find("input").val();
+        var filter = this.$el.find("input").val().trim();
 
-        if(!this.originalPoisonCollection)
-            this.originalPoisonCollection = new PoisonCollection().reset(this.collection.toJSON())
+        var selector = '.item:not(:contains('+ filter +'))';
 
-        if(filter.trim() != "")
-            this.collection.reset(this.originalPoisonCollection.filterByString(filter).toJSON());
-        else
-            this.collection.reset(this.originalPoisonCollection.toJSON());
+        console.log(filter);
 
-        this.app.poisonList();
+        $('.item').parent().removeClass("not-in-search");
+
+        $(selector).parent().addClass("not-in-search");
 
     },
 

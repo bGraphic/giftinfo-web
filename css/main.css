@@ -81,6 +81,10 @@ article.info {
     padding: 20px 40px;
 }
 
+ul.directory li.not-in-search {
+    display: none;
+}
+
 ul.directory li .item {
     font-size: 130%;
     font-weight: normal;

@@ -92,6 +92,7 @@ var AppRouter = Parse.Router.extend({
     },
 
     poisonList: function() {
+
         $("#app").html(this.poisonDirectoryView.el);
     },
 
