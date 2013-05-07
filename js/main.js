@@ -11,15 +11,27 @@ var AppRouter = Parse.Router.extend({
 
     initialize: function () {
 
-        $("#app").after('<img id="poison-spinner" src="img/spinner.gif">');
-
         this.poisonCollection = new PoisonCollection();
         this.poisonDirectoryView = new PoisonDirectoryView({collection: this.poisonCollection});
         this.poisonSearchView = new PoisonSearchDirectoryView({collection: this.poisonCollection, app: this});
 
         $("#filter").append(this.poisonSearchView.el);
 
-        this.batchRetrieve(0);
+        var self = this;
+
+        var query = new Parse.Query(Poison);
+        query.ascending("name");
+        query.limit(200);
+        query.find({
+            success: function(results) {
+                 self.poisonCollection.reset(results);
+                 console.log("Fetched " + results.length + " poisons");
+            },
+            error: function(error) {
+                  console.log("Error: " + error.code + " " + error.message);
+            }
+        });
+
     },
 
     home: function() {
@@ -91,7 +103,6 @@ var AppRouter = Parse.Router.extend({
     },
 
     poisonList: function() {
-
         $("#app").html(this.poisonDirectoryView.el);
     },
 
@@ -109,34 +120,6 @@ var AppRouter = Parse.Router.extend({
             },
             error: function(error) {
                 alert("Error: " + error.code + " " + error.message);
-            }
-        });
-    },
-
-    batchRetrieve: function (startIndex) {
-        self = this;
-        var limit = 15;
-
-        var query = new Parse.Query(Poison);
-        query.skip(startIndex);
-        query.limit(limit);
-        query.ascending("name");
-
-        query.find({
-            success: function(results) {
-                if(startIndex == 0)
-                    self.poisonCollection.add(results);
-                else
-                    self.poisonCollection.add(results);
-
-                if(results.length == limit)
-                    self.batchRetrieve(startIndex+limit);
-                else {
-                    $("#poison-spinner").remove();
-                }
-            },
-            error: function(error) {
-                console.log("Error: " + error.code + " " + error.message);
             }
         });
     }

@@ -11,6 +11,8 @@ var PoisonDirectoryView = Parse.View.extend({
         this.collection.bind("add", this.addPoisons);
         this.collection.bind("reset", this.resetPoisons);
 
+        this.$el.html('<img id="poison-spinner" src="img/spinner.gif">');
+
     },
 
     addPoisons: function (poisons) {
