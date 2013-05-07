@@ -69,6 +69,18 @@ header.page small {
     padding-top: 10px;
 }
 
+#app>article {
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+article.info {
+    border: 1px solid #ddd;
+    padding: 20px 40px;
+}
+
 ul.directory li .item {
     font-size: 130%;
     font-weight: normal;
@@ -98,8 +110,6 @@ ul.directory .info a.more-info:hover i {
 }
 
 ul.directory .info {
-    border: 1px solid #ddd;
-    padding: 20px 40px;
     display: none;
 }
 
