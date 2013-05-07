@@ -144,13 +144,24 @@ var PoisonSearchDirectoryView = Parse.View.extend({
 
         var filter = this.$el.find("input").val().trim();
 
-        var selector = '.item:not(:contains('+ filter +'))';
-
-        console.log(filter);
+        var notInSearchSelector = '.item:not(:contains('+ filter +'))';
+        var inSearchSelector = '.item:contains('+ filter +')';
 
         $('.item').parent().removeClass("not-in-search");
 
-        $(selector).parent().addClass("not-in-search");
+        $(notInSearchSelector).parent().addClass("not-in-search");
+
+
+        if($(inSearchSelector).length == 1 ) {
+
+            if(!this.poisonClicked) {
+                this.poisonClicked = true;
+                $(inSearchSelector).click();
+            }
+
+        } else {
+            this.poisonClicked = false;
+        }
 
     },
 
