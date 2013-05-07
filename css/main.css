@@ -203,6 +203,10 @@ ul.directory .info {
         border: none;
     }
 
+    #header h1 {
+        font-size: 40px;
+    }
+
     #header .lead {
         font-size: 1em;
     }
@@ -253,5 +257,26 @@ ul.directory .info {
     ul.directory li .item span {
         clear: both;
         display: block;
+    }
+
+
+    h2.sectionTitle {
+        font-size: 25px;
+    }
+
+    article.info h1 {
+        margin-bottom: 30px;
+    }
+
+    article.info h2 {
+        font-size: 25px;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    article.info h3 {
+        font-size: 20px;
+        margin-top: 30px;
+        margin-bottom: 15px;
     }
 }
