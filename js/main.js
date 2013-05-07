@@ -6,47 +6,12 @@ var AppRouter = Parse.Router.extend({
         "info":             "articleList",
         "info/:articleSlug":    "article",
         "liste":             "poisonList",
-        ":poisonSlug":           "poison"
+        "gift/:poisonSlug":      "poison"
     },
 
     initialize: function () {
 
         $("#app").after('<img id="poison-spinner" src="img/spinner.gif">');
-
-        this.articleCollection = new ArticleCollection();
-        this.articleDirectoryViewMore = new ArticleDirectoryView({
-            collection: new ArticleCollection(),
-            sectionTitle: "Mer informasjon om:"
-        });
-
-        this.articleDirectoryViewGeneralEmergency = new ArticleDirectoryView({
-            collection: new ArticleCollection(),
-            sectionTitle: "Generelle råd ved:"
-        });
-
-        self = this;
-
-        this.articleCollection.fetch({
-            success: function(collection) {
-                $("#poison-spinner").remove();
-
-                self.articleDirectoryViewMore.collection.reset([
-                    self.articleCollection.getBySlug("forebygging"),
-                    self.articleCollection.getBySlug("medisinsk-kull"),
-                    self.articleCollection.getBySlug("brekninger"),
-                    self.articleCollection.getBySlug("bevisstloshet")
-                ]);
-
-                self.articleDirectoryViewGeneralEmergency.collection.reset([
-                    self.articleCollection.getBySlug("svelging"),
-                    self.articleCollection.getBySlug("hudkontakt"),
-                    self.articleCollection.getBySlug("sol-i-oyet"),
-                    self.articleCollection.getBySlug("innanding")]);
-            },
-            error: function(collection, error) {
-                console.warn("Error: " + error);
-            }
-        });
 
         this.poisonCollection = new PoisonCollection();
         this.poisonDirectoryView = new PoisonDirectoryView({collection: this.poisonCollection});
@@ -58,9 +23,7 @@ var AppRouter = Parse.Router.extend({
     },
 
     home: function() {
-
-        this.articleList();
-
+        Parse.history.navigate("info", true);
     },
 
     about: function() {
@@ -68,9 +31,45 @@ var AppRouter = Parse.Router.extend({
     },
 
     articleList: function () {
+        var articleCollection = new ArticleCollection();
+
+        var articleDirectoryViewMore = new ArticleDirectoryView({
+            collection: new ArticleCollection(),
+            sectionTitle: "Mer informasjon om:"
+        });
+
+        var articleDirectoryViewGeneralEmergency = new ArticleDirectoryView({
+            collection: new ArticleCollection(),
+            sectionTitle: "Generelle råd ved:"
+        });
+
+        self = this;
+
+        articleCollection.fetch({
+            success: function(collection) {
+                $("#poison-spinner").remove();
+
+                articleDirectoryViewMore.collection.reset([
+                    articleCollection.getBySlug("forebygging"),
+                    articleCollection.getBySlug("medisinsk-kull"),
+                    articleCollection.getBySlug("brekninger"),
+                    articleCollection.getBySlug("bevisstloshet")
+                ]);
+
+                articleDirectoryViewGeneralEmergency.collection.reset([
+                    articleCollection.getBySlug("svelging"),
+                    articleCollection.getBySlug("hudkontakt"),
+                    articleCollection.getBySlug("sol-i-oyet"),
+                    articleCollection.getBySlug("innanding")]);
+            },
+            error: function(collection, error) {
+                console.warn("Error: " + error);
+            }
+        });
+
         $("#app").html("");
-        $("#app").append(this.articleDirectoryViewGeneralEmergency.el);
-        $("#app").append(this.articleDirectoryViewMore.el);
+        $("#app").append(articleDirectoryViewGeneralEmergency.el);
+        $("#app").append(articleDirectoryViewMore.el);
     },
 
     article: function(articleSlug) {

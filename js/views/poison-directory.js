@@ -70,7 +70,7 @@ var PoisonListItemView = Parse.View.extend({
         if(this.$el.children("article.info").is(":hidden"))
             Parse.history.navigate("liste");
         else
-            Parse.history.navigate(this.model.get("slug"));
+            Parse.history.navigate("gift/" + this.model.get("slug"));
     }
 });
 
@@ -124,6 +124,7 @@ var PoisonSearchDirectoryView = Parse.View.extend({
     template: _.template($('#poisonSearchTemplate').html()),
 
     events: {
+        'focusin' : 'viewPoisonList',
         'keyup' : 'filterCollection'
     },
 
@@ -135,12 +136,16 @@ var PoisonSearchDirectoryView = Parse.View.extend({
 
     },
 
-    filterCollection: function () {
-
+    viewPoisonList: function () {
         if($("#app #poisons").length == 0)
             this.app.poisonList();
 
         Parse.history.navigate("liste");
+    },
+
+    filterCollection: function () {
+
+        this.viewPoisonList();
 
         var filterString = this.$el.find("input").val().trim().toLowerCase();
 
