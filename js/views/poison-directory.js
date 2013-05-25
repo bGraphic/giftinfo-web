@@ -1,7 +1,5 @@
 var PoisonDirectoryView = Parse.View.extend({
-    tagName: "ul",
-    className: "directory nav nav-tabs nav-stacked",
-    id: "poisons",
+	el: $("#poison-collection"),
 
     initialize: function () {
         var self = this;
@@ -10,8 +8,6 @@ var PoisonDirectoryView = Parse.View.extend({
 
         this.collection.bind("add", this.addPoisons);
         this.collection.bind("reset", this.resetPoisons);
-
-        this.$el.html('<img id="poison-spinner" src="img/spinner.gif">');
 
     },
 
@@ -24,7 +20,7 @@ var PoisonDirectoryView = Parse.View.extend({
     },
 
     resetPoisons: function (newCollection) {
-        this.$el.html("");
+        this.$el.find("ul").html("");
         newCollection.each(this.addOnePoison);
     },
 
@@ -34,7 +30,7 @@ var PoisonDirectoryView = Parse.View.extend({
             collection: this.collection
         });
 
-        this.$el.append(poisonView.render().el);
+        this.$el.find("ul").append(poisonView.render().el);
 
         if(poison.get("slug") == this.selectedPoisonSlug)      {
             $('html,body').animate({scrollTop: poisonView.$el.offset().top});
@@ -55,6 +51,7 @@ var PoisonListItemView = Parse.View.extend({
     },
 
     render: function () {
+    
         this.$el.html(this.template(this.model.toJSON()));
         return this;
     },
@@ -68,9 +65,10 @@ var PoisonListItemView = Parse.View.extend({
 
         if(this.$el.children("article.info").length == 0)
             this.$el.append(poisonView.render().el);
+		else
+            this.$el.children("article.info").toggle();
 
         if(this.$el.children("article.info")) {
-            this.$el.children("article.info").toggle();
             this.$el.find(".item i.chevron").toggleClass("icon-chevron-down");
             this.$el.find(".item i.chevron").toggleClass("icon-chevron-right");
         }
@@ -124,68 +122,4 @@ var PoisonView = Parse.View.extend({
 
         return this;
     }
-});
-
-var PoisonSearchDirectoryView = Parse.View.extend({
-    el: "#filter",
-
-    template: _.template($('#poisonSearchTemplate').html()),
-
-    events: {
-        'focusin' : 'viewPoisonList',
-        'keyup' : 'filterCollection'
-    },
-
-    initialize:function () {
-        _.bindAll(this, 'filterCollection');
-
-        this.app = this.options.app;
-        this.render();
-
-    },
-
-    viewPoisonList: function () {
-        if($("#app #poisons").length == 0)
-            this.app.poisonList();
-
-        Parse.history.navigate("liste");
-    },
-
-    filterCollection: function () {
-
-        this.viewPoisonList();
-
-        var filterString = this.$el.find("input").val().trim().toLowerCase();
-
-        this.collection.each(function (poison) {
-                var slug = poison.get("slug");
-                var name = poison.get("name").trim().toLowerCase();
-                var tags = poison.get("tags");
-
-                var isMatch = false;
-
-                if(name.indexOf(filterString) > -1) {
-                    isMatch = true;
-                } else {
-                    if(tags) {
-                        tags.forEach(function(tag) {
-                            if(tag.indexOf(filterString) > -1) {
-                                isMatch = true;
-                            }
-                        });
-                    }
-                }
-
-                $("#"+slug).parent().toggle(isMatch);
-            }
-        );
-    },
-
-    render: function () {
-
-        this.$el.html(this.template());
-
-        return this;
-    }
-
 });

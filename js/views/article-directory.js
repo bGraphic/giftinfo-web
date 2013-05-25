@@ -1,6 +1,4 @@
 var ArticleDirectoryView = Parse.View.extend({
-    tagName: "ul",
-    className: "directory nav nav-tabs nav-stacked",
 
     initialize: function () {
         var self = this;
@@ -10,7 +8,7 @@ var ArticleDirectoryView = Parse.View.extend({
         this.collection.bind("add", this.addArticles);
         this.collection.bind("reset", this.resetArticles);
 
-        this.sectionTitle = this.options.sectionTitle;
+        this.el = this.options.el;
 
     },
 
@@ -23,8 +21,7 @@ var ArticleDirectoryView = Parse.View.extend({
     },
 
     resetArticles: function (newCollection) {
-        this.$el.html("");
-        this.$el.before("<h2 class='sectionTitle'>"+ this.sectionTitle +"</h2>");
+        this.$el.find("ul").html("");
         newCollection.each(this.addOneArticle);
     },
 
@@ -34,7 +31,7 @@ var ArticleDirectoryView = Parse.View.extend({
             model: article
         });
 
-        this.$el.append(articleView.render().el);
+        this.$el.find("ul").append(articleView.render().el);
     }
 });
 
@@ -58,11 +55,12 @@ var ArticleListItemView = Parse.View.extend({
             model: this.model
         });
 
-        if(this.$el.children("article.info").length == 0)
-            this.$el.append(articleView.render().el);
+		if(this.$el.children("article.info").length == 0)
+			this.$el.append(articleView.render().el);
+		else
+			this.$el.children("article.info").toggle();
 
         if(this.$el.children("article.info")) {
-            this.$el.children("article.info").toggle();
             this.$el.find(".item i.chevron").toggleClass("icon-chevron-down");
             this.$el.find(".item i.chevron").toggleClass("icon-chevron-right");
         }

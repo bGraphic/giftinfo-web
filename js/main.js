@@ -2,7 +2,6 @@ var AppRouter = Parse.Router.extend({
 
     routes: {
         "":                        "home",
-        "om":                     "about",
         "info":             "articleList",
         "info/:articleSlug":    "article",
         "liste":             "poisonList",
@@ -10,91 +9,56 @@ var AppRouter = Parse.Router.extend({
     },
 
     initialize: function () {
+    
+    	var self = this;
 
         this.poisonCollection = new PoisonCollection();
-        this.poisonDirectoryView = new PoisonDirectoryView({collection: this.poisonCollection});
-        this.poisonSearchView = new PoisonSearchDirectoryView({collection: this.poisonCollection, app: this});
-
-        $("#filter").append(this.poisonSearchView.el);
-
-        var self = this;
-
-        var query = new Parse.Query(Poison);
-        query.ascending("name");
-        query.limit(200);
-        query.find({
-            success: function(results) {
-                console.log("Fetched " + results.length + " poisons");
-                self.poisonCollection.reset(results);
-            },
-            error: function(error) {
-                  console.log("Error: " + error.code + " " + error.message);
-            }
+		this.moreInfoArticleCollection = new ArticleCollection();
+		this.generalInfoArticleCollection = new ArticleCollection();
+		
+		var poisonDirectoryView = new PoisonDirectoryView({
+			collection: this.poisonCollection
+		});
+        
+        var articleDirectoryViewMore = new ArticleDirectoryView({
+            collection: this.moreInfoArticleCollection,
+            el: "#info-more-collection"
         });
 
+        var articleDirectoryViewGeneralEmergency = new ArticleDirectoryView({
+            collection: this.generalInfoArticleCollection,
+            el: "#info-general-collection"
+        });
+        
+        this.appView = new AppView({
+        	collection: this.poisonCollection}
+        );
+        
+        this.retrievePoisons();
+        this.retrieveArticles();
     },
 
     home: function() {
         Parse.history.navigate("info", true);
     },
-
-    about: function() {
-        this.article("om");
+    
+    updateNavbar: function(activePage) {
+    	this.appView.clearFilter();
+    
+    	$(".navbar li").removeClass("active");
+    	$(".navbar li."+activePage).addClass("active");
     },
 
     articleList: function () {
     
-    	$(".navbar li.info").addClass("active");
-    	$(".navbar li.poison-collection").removeClass("active");
-
-        $("#app").parent().append('<img id="poison-spinner" src="img/spinner.gif">');
-
-        var articleCollection = new ArticleCollection();
-
-        var articleDirectoryViewMore = new ArticleDirectoryView({
-            collection: new ArticleCollection(),
-            sectionTitle: "Mer informasjon om:"
-        });
-
-        var articleDirectoryViewGeneralEmergency = new ArticleDirectoryView({
-            collection: new ArticleCollection(),
-            sectionTitle: "Generelle råd ved:"
-        });
-
-        self = this;
-
-        articleCollection.fetch({
-            success: function(collection) {
-                $("#poison-spinner").remove();
-
-                articleDirectoryViewMore.collection.reset([
-                    articleCollection.getBySlug("forebygging"),
-                    articleCollection.getBySlug("medisinsk-kull"),
-                    articleCollection.getBySlug("brekninger"),
-                    articleCollection.getBySlug("bevisstloshet")
-                ]);
-
-                articleDirectoryViewGeneralEmergency.collection.reset([
-                    articleCollection.getBySlug("svelging"),
-                    articleCollection.getBySlug("hudkontakt"),
-                    articleCollection.getBySlug("sol-i-oyet"),
-                    articleCollection.getBySlug("innanding")
-                ]);
-            },
-            error: function(collection, error) {
-                console.warn("Error: " + error);
-            }
-        });
-
-        $("#app").html("");
-        $("#app").append(articleDirectoryViewGeneralEmergency.el);
-        $("#app").append(articleDirectoryViewMore.el);
+    	$("#poison-collection").hide();
+		$('[id^="info-"]').show();
+    
+    	this.updateNavbar("info");
 
     },
 
     article: function(articleSlug) {
-
-        $("#app").html('<img id="poison-spinner" src="img/spinner.gif">');
 
         var query = new Parse.Query(Article);
         query.equalTo("slug", articleSlug);
@@ -112,18 +76,66 @@ var AppRouter = Parse.Router.extend({
     },
 
     poisonList: function() {
-    	$(".navbar li.poison-collection").addClass("active");
-    	$(".navbar li.info").removeClass("active");
-    
-        $("#app").html(this.poisonDirectoryView.el);
+    	$("#poison-collection").show();
+    	$('[id^="info-"]').hide();
+    	
+    	this.updateNavbar("poison-collection");
     },
 
     poison: function(poisonSlug) {
 
-        this.poisonDirectoryView.selectedPoisonSlug = poisonSlug;
 
-        this.poisonList();
+    },
+    
+    retrieveArticles: function () {
+    
+        var articleCollection = new ArticleCollection();
+        
+        var self = this;
+    
+    	articleCollection.fetch({
+            success: function(collection) {
+                $('[id^="info-"] .spinner').remove();
+
+				self.moreInfoArticleCollection.reset([
+                    articleCollection.getBySlug("forebygging"),
+                    articleCollection.getBySlug("medisinsk-kull"),
+                    articleCollection.getBySlug("brekninger"),
+                    articleCollection.getBySlug("bevisstloshet")
+                ]);
+
+				self.generalInfoArticleCollection.reset([
+                    articleCollection.getBySlug("svelging"),
+                    articleCollection.getBySlug("hudkontakt"),
+                    articleCollection.getBySlug("sol-i-oyet"),
+                    articleCollection.getBySlug("innanding")
+                ]);
+            },
+            error: function(collection, error) {
+                console.warn("Error: " + error);
+            }
+        });	
+    },
+    
+    retrievePoisons: function () {
+    
+    	var self = this;
+    
+    	var query = new Parse.Query(Poison);
+    	query.ascending("name");
+    	query.limit(200);
+    	query.find({
+    	    success: function(results) {
+    	        console.log("Fetched " + results.length + " poisons");
+                $('#poison-collection .spinner').remove();
+    	        self.poisonCollection.reset(results);
+    	    },
+    	    error: function(error) {
+    	          console.log("Error: " + error.code + " " + error.message);
+    	    }
+    	});		
     }
+    
 
 });
 

@@ -24,22 +24,22 @@ var PoisonCollection = Parse.Collection.extend({
         return myPoison;
     },
 
+    
     filterByString: function(filterString) {
 
-        var myPoisons = new PoisonCollection();
-        filterString = filterString.trim().toLowerCase();
+        return this.filter(function(poison){
+			var name = poison.get("name").trim().toLowerCase();
+			var tags = poison.get("tags");
+			
+			if(tags != null)
+				tags = tags.toString().trim().toLowerCase();
+			else
+				tags = "";
+			            
+            filterString = filterString.trim().toLowerCase();
 
-        this.each(function (poison) {
-                var name = poison.get("name").trim().toLowerCase();
-                var tags = poison.get("tags");
-
-                if(name.indexOf(filterString) > -1) {
-                    myPoisons.add(poison);
-                }
-            }
-        );
-
-        return myPoisons;
+            return name.indexOf(filterString) > -1 || tags.indexOf(filterString) > -1;
+        });
     }
 
 });
