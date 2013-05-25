@@ -66,11 +66,6 @@ header.page small {
     border-right: none;
 }
 
-.navbar .navbar-inner {
-    min-height: 50px;
-    padding-top: 10px;
-}
-
 h2.sectionTitle {
     padding-left: 20px;
 }

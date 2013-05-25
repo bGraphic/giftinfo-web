@@ -43,6 +43,9 @@ var AppRouter = Parse.Router.extend({
     },
 
     articleList: function () {
+    
+    	$(".navbar li.info").addClass("active");
+    	$(".navbar li.poison-collection").removeClass("active");
 
         $("#app").parent().append('<img id="poison-spinner" src="img/spinner.gif">');
 
@@ -109,6 +112,9 @@ var AppRouter = Parse.Router.extend({
     },
 
     poisonList: function() {
+    	$(".navbar li.poison-collection").addClass("active");
+    	$(".navbar li.info").removeClass("active");
+    
         $("#app").html(this.poisonDirectoryView.el);
     },
 
