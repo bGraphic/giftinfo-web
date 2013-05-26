@@ -55,14 +55,20 @@ var ArticleListItemView = Parse.View.extend({
     template: _.template($('#articleItemTemplate').html()),
 
     events: {
-        "click a.item" : "toggleArticleInfo"
+        "click a.item" : "itemClicked"
     },
 
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
         return this;
     },
-
+    
+    itemClicked: function () {
+    	_gaq.push(['_trackEvent', 'Article', 'Open', this.model.get("slug")]);
+    
+    	this.toggleArticleInfo();
+    },
+    
     toggleArticleInfo: function () {
 
         var articleView = new ArticleView({

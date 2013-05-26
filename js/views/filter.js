@@ -59,7 +59,7 @@ var FilterView = Parse.View.extend({
         	}
         	
         	if(filteredCollection.length == 0) {
-        		_gaq.push(['_trackEvent', 'Poison', 'Search', '_'+selectedPoisonSlug]);
+        		_gaq.push(['_trackEvent', 'Poison', 'Search', '_'+filter]);
         	}
         
             this.collection.reset(filteredCollection);
