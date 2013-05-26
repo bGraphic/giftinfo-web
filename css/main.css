@@ -78,13 +78,6 @@ h2.sectionTitle {
 
 article.info {
     border: 1px solid #ddd;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-}
-
-article.info {
-    border: 1px solid #ddd;
     padding: 20px 40px;
 
     word-wrap: break-word;
@@ -117,10 +110,6 @@ article.info > ul, article.info > ol {
 
 article.info > ul li {
     list-style-type: disc;
-}
-
-ul li.not-in-search {
-    display: none;
 }
 
 ul li .item {
@@ -184,6 +173,11 @@ ul .info a.more-info:hover i {
 
 @media (max-width: 767px) {
 
+	#app {
+	    margin-left: -20px;
+	    margin-right: -20px;
+	}
+
     header.page {
         text-align: center;
     }
@@ -208,20 +202,9 @@ ul .info a.more-info:hover i {
         font-size: 1em;
     }
 
-    .navbar, #app {
-        margin-left: -20px;
-        margin-right: -20px;
-    }
-
-    .navbar #filter {
-        float: none;
-        text-align: center;
-    }
-
-    .navbar #filter input {
-        width: 90%;
-        text-align: center;
-    }
+	form#filter {
+	    text-align: center;
+	}
 
     .nav-tabs.nav-stacked>li>a {
         border-left: none;
