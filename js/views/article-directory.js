@@ -21,7 +21,7 @@ var ArticleDirectoryView = Parse.View.extend({
     },
 
     resetArticles: function (newCollection) {
-        this.$el.find("ul").html("");
+        this.$el.find("ul.nav").html("");
         newCollection.each(this.addOneArticle);
     },
 
@@ -31,7 +31,21 @@ var ArticleDirectoryView = Parse.View.extend({
             model: article
         });
 
-        this.$el.find("ul").append(articleView.render().el);
+        this.$el.find("ul.nav").append(articleView.render().el);
+
+        
+        if(article.get("slug") == this.collection.selectedArticleSlug)      
+        {
+            articleView.toggleArticleInfo();
+			
+			if(this.collection.scrollToSlug)
+				$('html,body').animate({scrollTop: articleView.$el.offset().top});
+				
+			this.collection.selectedArticleSlug = null;
+			this.collection.scrollToSlug = null;
+			
+        }
+        
     }
 });
 

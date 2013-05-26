@@ -20,7 +20,7 @@ var PoisonDirectoryView = Parse.View.extend({
     },
 
     resetPoisons: function (newCollection) {
-        this.$el.find("ul").html("");
+        this.$el.find("ul.nav").html("");
         newCollection.each(this.addOnePoison);
     },
 
@@ -30,14 +30,19 @@ var PoisonDirectoryView = Parse.View.extend({
             collection: this.collection
         });
 
-        this.$el.find("ul").append(poisonView.render().el);
+        this.$el.find("ul.nav").append(poisonView.render().el);
 
-        if(poison.get("slug") == this.selectedPoisonSlug)      {
-            $('html,body').animate({scrollTop: poisonView.$el.offset().top});
+        if(poison.get("slug") == this.collection.selectedPoisonSlug)      
+        {
             poisonView.togglePoisonInfo();
+			
+			if(this.collection.scrollToSlug)
+				$('html,body').animate({scrollTop: poisonView.$el.offset().top});
+				
+			this.collection.selectedPoisonSlug = null;
+			this.collection.scrollToSlug = null;
+			
         }
-
-
     }
 });
 
@@ -74,9 +79,9 @@ var PoisonListItemView = Parse.View.extend({
         }
 
         if(this.$el.children("article.info").is(":hidden"))
-            Parse.history.navigate("liste");
+            Parse.history.navigate("liste", false);
         else
-            Parse.history.navigate("gift/" + this.model.get("slug"));
+            Parse.history.navigate("gift/" + this.model.get("slug"), false);
     }
 });
 
