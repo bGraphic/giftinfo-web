@@ -35,10 +35,12 @@ var PoisonDirectoryView = Parse.View.extend({
         if(poison.get("slug") == this.collection.selectedPoisonSlug)      
         {
             poisonView.togglePoisonInfo();
-			this.collection.selectedPoisonSlug = null;
 			
 			if(this.collection.scrollToSlug)
 				$('html,body').animate({scrollTop: poisonView.$el.offset().top});
+				
+			this.collection.selectedPoisonSlug = null;
+			this.collection.scrollToSlug = null;
 			
         }
     }

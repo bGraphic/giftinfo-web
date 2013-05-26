@@ -53,14 +53,23 @@ var AppRouter = Parse.Router.extend({
     
     	$("#poison-collection").hide();
 		$('[id^="info-"]').show();
+		
     	$('article.info').hide();
+		$(".item i.chevron").removeClass("icon-chevron-down");
+		$(".item i.chevron").addClass("icon-chevron-right");
     
     	this.updateNavbar("info");
 
     },
 
     article: function(articleSlug) {
-
+		this.generalInfoArticleCollection.selectedArticleSlug = articleSlug;
+		this.generalInfoArticleCollection.scrollToSlug = true;
+		
+		this.moreInfoArticleCollection.selectedArticleSlug = articleSlug;
+		this.moreInfoArticleCollection.scrollToSlug = true;
+		
+		this.articleList();
     },
 
     poisonList: function() {
