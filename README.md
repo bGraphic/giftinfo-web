@@ -3,7 +3,7 @@ giftinfo-web
 
 Webversjonen av appen Giftinformasjon.
 
-Hvordan oppdatere siden
+Hvordan oppdatere til produksjon
 ====
 
 Siden oppdateres ved at man pusher master til remote gh-pages
