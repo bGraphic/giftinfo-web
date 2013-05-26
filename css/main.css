@@ -1,6 +1,12 @@
-body {
+#app {
+    overflow-x: hidden;
     padding-top: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
+}
+
+
+#info-more-collection, #info-general-collection, #poison-collection {
+    display: none;
 }
 
 a {
@@ -66,20 +72,8 @@ header.page small {
     border-right: none;
 }
 
-.navbar .navbar-inner {
-    min-height: 50px;
-    padding-top: 10px;
-}
-
 h2.sectionTitle {
     padding-left: 20px;
-}
-
-#app>article.info {
-    border: 1px solid #ddd;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
 }
 
 article.info {
@@ -118,11 +112,7 @@ article.info > ul li {
     list-style-type: disc;
 }
 
-ul.directory li.not-in-search {
-    display: none;
-}
-
-ul.directory li .item {
+ul li .item {
     font-size: 130%;
     font-weight: normal;
 
@@ -137,7 +127,7 @@ ul.directory li .item {
     background-size: 40px 56px;
 }
 
-ul.directory li .item i.chevron {
+ul li .item i.chevron {
     position: absolute;
     top: 50%;
     right: 15px;
@@ -146,15 +136,11 @@ ul.directory li .item i.chevron {
     opacity: 0.25;
 }
 
-ul.directory .info a.more-info:hover i {
+ul .info a.more-info:hover i {
     opacity: 0.75;
 }
 
-ul.directory .info {
-    display: none;
-}
-
-#poison-spinner {
+.spinner {
     display: block;
     margin: auto;
 
@@ -187,6 +173,11 @@ ul.directory .info {
 
 @media (max-width: 767px) {
 
+	#app {
+	    margin-left: -20px;
+	    margin-right: -20px;
+	}
+
     header.page {
         text-align: center;
     }
@@ -211,27 +202,16 @@ ul.directory .info {
         font-size: 1em;
     }
 
-    .navbar, #app {
-        margin-left: -20px;
-        margin-right: -20px;
-    }
+	form#filter {
+	    text-align: center;
+	}
 
-    .navbar #filter {
-        float: none;
-        text-align: center;
-    }
-
-    .navbar #filter input {
-        width: 90%;
-        text-align: center;
-    }
-
-    #app .nav-tabs.nav-stacked>li>a {
+    .nav-tabs.nav-stacked>li>a {
         border-left: none;
         border-right: none;
     }
 
-    #app .nav-tabs.nav-stacked>li:first-child>a {
+    .nav-tabs.nav-stacked>li:first-child>a {
         -webkit-border-top-right-radius: 0;
         -moz-border-radius-topright: 0;
         border-top-right-radius: 0;
@@ -240,7 +220,7 @@ ul.directory .info {
         border-top-left-radius: 0;
     }
 
-    #app .nav-tabs.nav-stacked>li:last-child>a {
+	.nav-tabs.nav-stacked>li:last-child>a {
         -webkit-border-bottom-right-radius: 0;
         -moz-border-radius-bottomright: 0;
         border-bottom-right-radius: 0;
