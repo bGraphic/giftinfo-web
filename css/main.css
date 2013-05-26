@@ -177,6 +177,11 @@ ul .info a.more-info:hover i {
 	    margin-left: -20px;
 	    margin-right: -20px;
 	}
+	
+	header .container, .section-title {
+        padding: 0 20px;
+	}
+	
 
     header.page {
         text-align: center;
