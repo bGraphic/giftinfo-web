@@ -70,6 +70,8 @@ var AppRouter = Parse.Router.extend({
 		this.moreInfoArticleCollection.scrollToSlug = true;
 		
 		this.articleList();
+		
+		_gaq.push(['_trackEvent', 'Article', 'Landing', articleSlug]);
     },
 
     poisonList: function() {
@@ -86,7 +88,10 @@ var AppRouter = Parse.Router.extend({
     poison: function(poisonSlug) {
 		this.poisonCollection.selectedPoisonSlug = poisonSlug;
 		this.poisonCollection.scrollToSlug = true;
+		
 		this.poisonList();
+		
+		_gaq.push(['_trackEvent', 'Poison', 'Landing', poisonSlug]);
     },
     
     retrieveArticles: function () {
@@ -150,5 +155,9 @@ $(function() {
 
     var app = new AppRouter();
     Parse.history.start();
+    
+    $('a.external').click(function(){
+    	_gaq.push(['_trackEvent', 'External Links', 'Click', $(this).attr('href')]);
+    });
 
 });

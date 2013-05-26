@@ -52,7 +52,7 @@ var PoisonListItemView = Parse.View.extend({
     template: _.template($('#poisonItemTemplate').html()),
 
     events: {
-        "click a.item" : "togglePoisonInfo"
+        "click a.item" : "itemClicked"
     },
 
     render: function () {
@@ -60,6 +60,12 @@ var PoisonListItemView = Parse.View.extend({
         this.$el.html(this.template(this.model.toJSON()));
         return this;
     },
+    
+	itemClicked: function () {
+		_gaq.push(['_trackEvent', 'Poison', 'Open', this.model.get("slug")]);
+	
+		this.togglePoisonInfo();
+	},
 
     togglePoisonInfo: function () {
 
