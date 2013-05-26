@@ -30,7 +30,7 @@ var AppRouter = Parse.Router.extend({
             el: "#info-general-collection"
         });
         
-        this.appView = new AppView({
+        this.filterView = new FilterView({
         	collection: this.poisonCollection}
         );
         
@@ -43,7 +43,7 @@ var AppRouter = Parse.Router.extend({
     },
     
     updateNavbar: function(activePage) {
-    	this.appView.clearFilter();
+    	this.filterView.clearFilter();
     
     	$(".navbar li").removeClass("active");
     	$(".navbar li."+activePage).addClass("active");
@@ -53,6 +53,7 @@ var AppRouter = Parse.Router.extend({
     
     	$("#poison-collection").hide();
 		$('[id^="info-"]').show();
+    	$('article.info').hide();
     
     	this.updateNavbar("info");
 
@@ -60,31 +61,23 @@ var AppRouter = Parse.Router.extend({
 
     article: function(articleSlug) {
 
-        var query = new Parse.Query(Article);
-        query.equalTo("slug", articleSlug);
-        query.first({
-            success: function(article) {
-                var articleView = new ArticleView({
-                    model: article
-                });
-                $("#app").html(articleView.render().el);
-            },
-            error: function(error) {
-                alert("Error: " + error.code + " " + error.message);
-            }
-        });
     },
 
     poisonList: function() {
     	$("#poison-collection").show();
     	$('[id^="info-"]').hide();
     	
+    	$('article.info').hide();
+		$(".item i.chevron").removeClass("icon-chevron-down");
+		$(".item i.chevron").addClass("icon-chevron-right");
+    	
     	this.updateNavbar("poison-collection");
     },
 
     poison: function(poisonSlug) {
-
-
+		this.poisonCollection.selectedPoisonSlug = poisonSlug;
+		this.poisonCollection.scrollToSlug = true;
+		this.poisonList();
     },
     
     retrieveArticles: function () {
